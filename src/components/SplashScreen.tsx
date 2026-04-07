@@ -25,6 +25,46 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
   }, [onFinish]);
 
   useEffect(() => {
+    const AudioCtx = window.AudioContext || (window as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+
+    const playBeat = (time: number) => {
+      // "lub" — первый удар
+      const lub = ctx.createOscillator();
+      const lubGain = ctx.createGain();
+      lub.type = "sine";
+      lub.frequency.setValueAtTime(80, time);
+      lub.frequency.exponentialRampToValueAtTime(40, time + 0.08);
+      lubGain.gain.setValueAtTime(0.6, time);
+      lubGain.gain.exponentialRampToValueAtTime(0.001, time + 0.12);
+      lub.connect(lubGain);
+      lubGain.connect(ctx.destination);
+      lub.start(time);
+      lub.stop(time + 0.15);
+
+      // "dub" — второй удар (чуть тише, через 0.18 сек)
+      const dub = ctx.createOscillator();
+      const dubGain = ctx.createGain();
+      dub.type = "sine";
+      dub.frequency.setValueAtTime(70, time + 0.18);
+      dub.frequency.exponentialRampToValueAtTime(35, time + 0.26);
+      dubGain.gain.setValueAtTime(0.4, time + 0.18);
+      dubGain.gain.exponentialRampToValueAtTime(0.001, time + 0.30);
+      dub.connect(dubGain);
+      dubGain.connect(ctx.destination);
+      dub.start(time + 0.18);
+      dub.stop(time + 0.32);
+    };
+
+    // Два удара за время сплеша (~2.2 сек)
+    playBeat(ctx.currentTime + 0.3);
+    playBeat(ctx.currentTime + 1.25);
+
+    return () => { ctx.close(); };
+  }, []);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
