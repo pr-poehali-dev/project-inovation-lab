@@ -18,19 +18,51 @@ export default function Contacts() {
         <p className="text-xs uppercase tracking-widest text-red-600 mb-2">ЦГБ Невский</p>
         <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-10">Контакты</h1>
 
-        <div className="border border-border p-6 flex flex-col gap-3">
-          <p className="text-xs uppercase tracking-widest text-muted-foreground">
-            Куратор Отделения Интернатуры
-          </p>
-          <a
-            href="https://vk.ru/soul__shu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl md:text-2xl font-semibold text-red-600 hover:text-red-700 transition-colors flex items-center gap-2"
-          >
-            Ksenia_Donskaya
-            <Icon name="ExternalLink" size={18} />
-          </a>
+        <div className="flex flex-col gap-4">
+          <div className="border border-border p-6 flex flex-col gap-3">
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">
+              Куратор Отделения Интернатуры
+            </p>
+            <a
+              href="https://vk.ru/soul__shu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl md:text-2xl font-semibold text-red-600 hover:text-red-700 transition-colors flex items-center gap-2"
+            >
+              Ksenia_Donskaya
+              <Icon name="ExternalLink" size={18} />
+            </a>
+          </div>
+
+          <div className="border border-border p-6 flex flex-col gap-3">
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">
+              Заместитель Заведующего ОИ
+            </p>
+            <a
+              href="https://vk.ru/cccuvigon"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl md:text-2xl font-semibold text-red-600 hover:text-red-700 transition-colors flex items-center gap-2"
+            >
+              Egor_Maslow
+              <Icon name="ExternalLink" size={18} />
+            </a>
+          </div>
+
+          <div className="border border-border p-6 flex flex-col gap-3">
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">
+              Заместитель Заведующего ОИ
+            </p>
+            <a
+              href="https://vk.com/id392167605"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl md:text-2xl font-semibold text-red-600 hover:text-red-700 transition-colors flex items-center gap-2"
+            >
+              Andrei_Schmidt
+              <Icon name="ExternalLink" size={18} />
+            </a>
+          </div>
         </div>
       </div>
     </div>
