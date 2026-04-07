@@ -1,11 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface SplashScreenProps {
   onFinish: () => void;
 }
 
+// ECG path: flat line → spike → flat
+// Repeating pattern for animation
+const ECG_SEGMENT = "M0,50 L60,50 L70,50 L80,10 L90,90 L100,30 L110,50 L120,50 L180,50";
+const ECG_WIDTH = 180;
+
 export default function SplashScreen({ onFinish }: SplashScreenProps) {
   const [fadeOut, setFadeOut] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animRef = useRef<number>(0);
+  const offsetRef = useRef(0);
 
   useEffect(() => {
     const outTimer = setTimeout(() => setFadeOut(true), 2200);
@@ -15,6 +23,96 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
       clearTimeout(doneTimer);
     };
   }, [onFinish]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    // ECG points per one beat cycle (relative, 0–1 x, y in px from center)
+    const beatPoints = [
+      [0, 0], [0.15, 0], [0.2, 0], [0.22, -60], [0.25, 80],
+      [0.28, -30], [0.32, 0], [0.38, 0], [1.0, 0],
+    ];
+
+    const BEAT_W = 300; // px per beat
+    const LINE_Y_OFFSET = 0; // center vertically
+    const SPEED = 2.5;
+
+    const draw = () => {
+      const W = canvas.width;
+      const H = canvas.height;
+      ctx.clearRect(0, 0, W, H);
+
+      const cy = H / 2 + LINE_Y_OFFSET;
+
+      // Draw two ECG lines (top and bottom of logo)
+      [-130, 130].forEach((yShift) => {
+        ctx.beginPath();
+        ctx.strokeStyle = "rgba(255,255,255,0.25)";
+        ctx.lineWidth = 2;
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
+
+        // Render enough beats to fill screen
+        const totalBeats = Math.ceil(W / BEAT_W) + 2;
+        let first = true;
+
+        for (let b = -1; b < totalBeats; b++) {
+          for (let i = 0; i < beatPoints.length; i++) {
+            const [tx, ty] = beatPoints[i];
+            const x = b * BEAT_W + tx * BEAT_W - (offsetRef.current % BEAT_W);
+            const y = cy + yShift + ty;
+            if (first) { ctx.moveTo(x, y); first = false; }
+            else ctx.lineTo(x, y);
+          }
+        }
+        ctx.stroke();
+
+        // Bright "active" head — glowing dot moving along
+        const headX = (W * 0.62) - (offsetRef.current % BEAT_W) + BEAT_W;
+        // Find y at headX position within beat
+        const posInBeat = ((headX + offsetRef.current) % BEAT_W) / BEAT_W;
+        let headY = cy + yShift;
+        for (let i = 0; i < beatPoints.length - 1; i++) {
+          const [x0, y0] = beatPoints[i];
+          const [x1, y1] = beatPoints[i + 1];
+          if (posInBeat >= x0 && posInBeat <= x1) {
+            const t = (posInBeat - x0) / (x1 - x0);
+            headY = cy + yShift + y0 + (y1 - y0) * t;
+            break;
+          }
+        }
+
+        // Glow trail
+        const grad = ctx.createRadialGradient(headX, headY, 0, headX, headY, 18);
+        grad.addColorStop(0, "rgba(255,255,255,0.9)");
+        grad.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.beginPath();
+        ctx.arc(headX, headY, 18, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+      });
+
+      offsetRef.current += SPEED;
+      animRef.current = requestAnimationFrame(draw);
+    };
+
+    animRef.current = requestAnimationFrame(draw);
+
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
 
   return (
     <>
@@ -32,16 +130,6 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
           50%  { background-color: #991b1b; }
           100% { background-color: #7f1d1d; }
         }
-        @keyframes whitePulse {
-          0%   { transform: scale(0.5); opacity: 0.6; }
-          70%  { transform: scale(2.8); opacity: 0; }
-          100% { transform: scale(2.8); opacity: 0; }
-        }
-        @keyframes whitePulse2 {
-          0%   { transform: scale(0.5); opacity: 0.4; }
-          70%  { transform: scale(2.8); opacity: 0; }
-          100% { transform: scale(2.8); opacity: 0; }
-        }
       `}</style>
 
       <div
@@ -52,34 +140,7 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
             : "splashFadeIn 0.9s ease-out forwards, bgPulse 1.8s ease-in-out infinite",
         }}
       >
-        {/* Белые пульсирующие кольца */}
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: 320,
-            height: 320,
-            border: "3px solid rgba(255,255,255,0.5)",
-            animation: "whitePulse 1.8s ease-out infinite",
-          }}
-        />
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: 320,
-            height: 320,
-            border: "2px solid rgba(255,255,255,0.3)",
-            animation: "whitePulse2 1.8s ease-out 0.6s infinite",
-          }}
-        />
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: 320,
-            height: 320,
-            border: "2px solid rgba(255,255,255,0.2)",
-            animation: "whitePulse2 1.8s ease-out 1.2s infinite",
-          }}
-        />
+        <canvas ref={canvasRef} className="absolute inset-0" />
 
         <img
           src="https://cdn.poehali.dev/projects/e2f7351e-e666-4647-88af-b4a6ed42363d/bucket/60314116-cc27-4f93-a0fa-5f807475ed8c.png"
