@@ -1,8 +1,10 @@
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
   const container = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start start", "end start"],
@@ -37,12 +39,12 @@ export default function Hero() {
         <p className="text-base md:text-lg max-w-xl opacity-90">
           Методическое пособие для сотрудников отделения. Всё, что нужно знать с первого дня службы.
         </p>
-        <a
-          href="#learn"
+        <button
+          onClick={() => navigate("/learn")}
           className="mt-2 bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-sm uppercase tracking-widest font-semibold transition-all duration-300"
         >
           Перейти к обучению
-        </a>
+        </button>
       </div>
     </div>
   );
