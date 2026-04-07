@@ -1,25 +1,59 @@
+import { useEffect, useState } from "react";
+import Icon from "@/components/ui/icon";
+
 interface HeaderProps {
   className?: string;
 }
 
 export default function Header({ className }: HeaderProps) {
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved === "dark") {
+      document.documentElement.classList.add("dark");
+      setDark(true);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = !dark;
+    setDark(next);
+    if (next) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  };
+
   return (
     <header className={`absolute top-0 left-0 right-0 z-10 p-6 ${className ?? ""}`}>
       <div className="flex justify-between items-center">
-        <div className="text-white text-sm uppercase tracking-wide">Интернатура</div>
-        <nav className="flex gap-8">
+        <div className="text-white text-sm uppercase tracking-wide font-semibold">
+          ЦГБ Невский
+        </div>
+        <nav className="flex items-center gap-6">
           <a
             href="#about"
-            className="text-white hover:text-neutral-400 transition-colors duration-300 uppercase text-sm"
+            className="text-white hover:text-red-400 transition-colors duration-300 uppercase text-sm"
           >
             О пособии
           </a>
           <a
             href="#contact"
-            className="text-white hover:text-neutral-400 transition-colors duration-300 uppercase text-sm"
+            className="text-white hover:text-red-400 transition-colors duration-300 uppercase text-sm"
           >
             Правила
           </a>
+          <button
+            onClick={toggleTheme}
+            className="text-white hover:text-red-400 transition-colors duration-300 p-1"
+            aria-label="Переключить тему"
+          >
+            <Icon name={dark ? "Sun" : "Moon"} size={18} />
+          </button>
         </nav>
       </div>
     </header>
