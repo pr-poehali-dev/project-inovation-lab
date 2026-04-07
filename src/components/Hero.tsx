@@ -1,8 +1,20 @@
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { playClickSound } from "@/hooks/useSound";
+
+const HERO_KEY = "admin_hero";
+const defaultHero = {
+  subtitle: "Методическое пособие для сотрудников отделения. Всё, что нужно знать с первого дня службы.",
+  buttonText: "Перейти к обучению",
+};
 
 export default function Hero() {
+  const heroData = (() => {
+    try { return JSON.parse(localStorage.getItem(HERO_KEY) || "null") || defaultHero; }
+    catch { return defaultHero; }
+  })();
+
   const container = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { scrollYProgress } = useScroll({
@@ -24,6 +36,7 @@ export default function Hero() {
           src="/images/mountain-landscape.jpg"
           alt="Mountain landscape"
           className="w-full h-full object-cover brightness-50"
+          style={{ filter: "grayscale(100%) blur(3px) brightness(0.45)" }}
         />
       </motion.div>
 
@@ -34,13 +47,13 @@ export default function Hero() {
           className="w-44 md:w-60 lg:w-72 object-contain drop-shadow-2xl"
         />
         <p className="text-base md:text-lg max-w-xl opacity-90">
-          Методическое пособие для сотрудников отделения. Всё, что нужно знать с первого дня службы.
+          {heroData.subtitle}
         </p>
         <button
-          onClick={() => navigate("/learn")}
+          onClick={() => { playClickSound(); navigate("/learn"); }}
           className="mt-2 bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-sm uppercase tracking-widest font-semibold transition-all duration-300"
         >
-          Перейти к обучению
+          {heroData.buttonText}
         </button>
       </div>
     </div>

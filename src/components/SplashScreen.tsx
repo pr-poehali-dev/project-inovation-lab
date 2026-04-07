@@ -26,7 +26,7 @@ const BEAT: [number, number][] = [
 
 const BEAT_W_PX = 300;
 const AMPLITUDE  = 52;
-const BEAT_MS    = 950;
+const BEAT_MS    = 1400;
 const BEAT_TIMES = [450, 1450, 2450]; // ms after start
 
 export default function SplashScreen({ onFinish }: SplashScreenProps) {

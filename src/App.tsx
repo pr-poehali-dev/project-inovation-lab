@@ -10,6 +10,8 @@ import Learn from "./pages/Learn";
 import Contacts from "./pages/Contacts";
 import NotFound from "./pages/NotFound";
 import SplashScreen from "./components/SplashScreen";
+import AdminLogin from "./pages/AdminLogin";
+import AdminPanel from "./pages/AdminPanel";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +29,8 @@ const App = () => {
             <Route path="/" element={<Index />} />
             <Route path="/learn" element={<Learn />} />
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminPanel />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

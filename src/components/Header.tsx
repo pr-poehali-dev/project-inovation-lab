@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
+import { playClickSound } from "@/hooks/useSound";
 
 interface HeaderProps {
   className?: string;
@@ -38,19 +39,20 @@ export default function Header({ className }: HeaderProps) {
         </div>
         <nav className="flex items-center gap-6">
           <button
-            onClick={() => navigate("/contacts")}
+            onClick={() => { playClickSound(); navigate("/contacts"); }}
             className="text-white hover:text-red-400 transition-colors duration-300 uppercase text-sm"
           >
             Контакты
           </button>
           <a
             href="#contact"
+            onClick={playClickSound}
             className="text-white hover:text-red-400 transition-colors duration-300 uppercase text-sm"
           >
             Правила
           </a>
           <button
-            onClick={toggleTheme}
+            onClick={() => { playClickSound(); toggleTheme(); }}
             className="text-white hover:text-red-400 transition-colors duration-300 p-1"
             aria-label="Переключить тему"
           >

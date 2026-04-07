@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
-const sections = [
+const SECTIONS_KEY = "admin_sections";
+const defaultSections = [
   {
     id: "intern",
     title: "Интерн",
@@ -32,6 +33,11 @@ const sections = [
 ];
 
 export default function Learn() {
+  const sections = (() => {
+    try { return JSON.parse(localStorage.getItem(SECTIONS_KEY) || "null") || defaultSections; }
+    catch { return defaultSections; }
+  })();
+
   const [open, setOpen] = useState<string[]>([]);
   const navigate = useNavigate();
 
