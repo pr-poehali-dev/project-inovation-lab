@@ -261,6 +261,88 @@ export default function Learn() {
                     <span className="font-semibold text-red-400">Важное правило:</span> Настройку биндов необходимо производить построчно. Не копируйте весь блок текста сразу!
                   </p>
                 </div>
+
+                {/* Шаг 2 */}
+                <div className="flex flex-col gap-3 pt-2 border-t border-border">
+                  <p className="text-base font-semibold text-center text-foreground">Шаг 2: Настройка первой строки (Приветствие)</p>
+
+                  <ol className="flex flex-col gap-4">
+                    {/* 1 */}
+                    <li className="flex items-start gap-2 text-sm text-foreground">
+                      <span className="shrink-0 font-medium text-muted-foreground">1.</span>
+                      <span>
+                        Скопируйте первую строку бинда (она начинается с{" "}
+                        <code className="bg-secondary border border-border rounded px-1.5 py-0.5 text-xs font-mono italic">bind</code>
+                        );
+                      </span>
+                    </li>
+
+                    {/* 2 */}
+                    <li className="flex flex-col gap-2 text-sm text-foreground">
+                      <div className="flex items-start gap-2">
+                        <span className="shrink-0 font-medium text-muted-foreground">2.</span>
+                        <span>
+                          Откройте игру и нажмите клавишу{" "}
+                          <span className="font-bold text-red-500">F8</span>
+                          , чтобы открыть консоль разработчика, как на{" "}
+                          <span className="font-semibold text-foreground">скриншоте №2</span>;
+                        </span>
+                      </div>
+                      {/* место для скриншота */}
+                      <div className="w-full rounded-sm border border-dashed border-border bg-secondary flex items-center justify-center py-10 text-xs text-muted-foreground ml-5">
+                        Скриншот будет добавлен позже
+                      </div>
+                      <p className="text-xs text-muted-foreground text-center ml-5">Скриншот №2: Консоль разработчика (F8).</p>
+                    </li>
+
+                    {/* 3 */}
+                    <li className="flex flex-col gap-3 text-sm text-foreground">
+                      <div className="flex items-start gap-2">
+                        <span className="shrink-0 font-medium text-muted-foreground">3.</span>
+                        <span>
+                          Вставьте скопированную строку в консоль{" "}
+                          <span className="font-bold">(Ctrl + V)</span>.{" "}
+                          <span className="text-red-500 font-semibold inline-flex items-center gap-1">
+                            <Icon name="AlertTriangle" size={13} className="shrink-0" />
+                            Не нажимайте Enter!
+                          </span>
+                        </span>
+                      </div>
+
+                      <p className="text-sm font-semibold text-foreground ml-5">Редактирование бинда:</p>
+                      <p className="text-sm text-foreground ml-5">
+                        Замените шаблон <span className="font-bold">Имя Фамилия</span> на ваше Имя и Фамилию на русском языке (например, Ксения Донская).
+                      </p>
+
+                      <div className="ml-5 border-l-2 border-red-600/40 pl-4">
+                        <p className="text-sm text-muted-foreground italic">
+                          Убедитесь, что в строке отсутствует символ звёздочки *.
+                        </p>
+                      </div>
+                    </li>
+
+                    {/* 4 */}
+                    <li className="flex items-start gap-2 text-sm text-foreground">
+                      <span className="shrink-0 font-medium text-muted-foreground">4.</span>
+                      <span>
+                        После того как вы заменили имя и фамилию, нажмите <span className="font-bold">Enter</span>.
+                      </span>
+                    </li>
+                  </ol>
+
+                  {/* Проверка */}
+                  <div className="border border-border rounded-sm p-4 flex flex-col gap-3 bg-secondary/40">
+                    <p className="text-sm font-semibold text-foreground">Проверка:</p>
+                    <p className="text-sm text-foreground">
+                      Если в консоли появилась строка вида — вы всё сделали правильно.
+                    </p>
+                    <div className="bg-secondary border border-border rounded-sm px-4 py-3">
+                      <code className="text-xs text-muted-foreground font-mono">
+                        * Bound key '1' 'down' to command 'say Здравствуйте, меня зовут [Ваше ИМЯ и ФАМИЛИЯ], я сотрудник ЦГБ города Невский'
+                      </code>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
