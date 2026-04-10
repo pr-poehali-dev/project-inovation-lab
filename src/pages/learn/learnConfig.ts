@@ -1,4 +1,4 @@
-export type SectionId = "intro" | "intern" | "intern-binds" | "intern-radio" | "intern-reports" | "intern-commands" | "intern-abbr" | "intern-schedule" | "intern-floors" | "intern-activity" | "intern-departments" | "feldsher";
+export type SectionId = "intro" | "intern" | "intern-binds" | "intern-radio" | "intern-reports" | "intern-commands" | "intern-abbr" | "intern-schedule" | "intern-floors" | "intern-activity" | "intern-departments" | "intern-drugs" | "feldsher";
 
 export const NAV: { id: SectionId; label: string; icon: string; parent?: string; divider?: string }[] = [
   { id: "intro",           label: "Вступление",         icon: "Flag" },
@@ -12,5 +12,6 @@ export const NAV: { id: SectionId; label: string; icon: string; parent?: string;
   { id: "intern-floors",   label: "Распределение этажей",   icon: "Building2",    parent: "intern" },
   { id: "intern-activity",     label: "Журнал активности (ЖА)", icon: "ClipboardList", parent: "intern" },
   { id: "intern-departments",  label: "Отделения ЦГБ-Н",       icon: "Network",       parent: "intern", divider: "Шаг 3: Экзамен" },
+  { id: "intern-drugs",        label: "Препараты",              icon: "Pill",          parent: "intern" },
   { id: "feldsher",            label: "Фельдшер",               icon: "Stethoscope" },
 ];
