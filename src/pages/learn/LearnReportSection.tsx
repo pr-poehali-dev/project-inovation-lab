@@ -33,19 +33,7 @@ export default function LearnReportSection({ go }: LearnReportSectionProps) {
         </li>
         <li className="flex items-start gap-3">
           <span className="text-muted-foreground text-base w-5 shrink-0 pt-0.5 font-medium">2.</span>
-          <span className="text-base text-foreground">
-            Загрузить доказательства в{" "}
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLScO0bFomyEMvIseA4JHYSQiNTWdmN3DinF4Ra7gv7eCQKMqEw/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-red-500 hover:text-red-400 transition-colors font-semibold"
-            >
-              МИС «Здоровье»
-              <Icon name="ExternalLink" size={13} />
-            </a>
-            ;
-          </span>
+          <span className="text-base text-foreground">Загрузить доказательства в МИС «Здоровье»;</span>
         </li>
         <li className="flex items-start gap-3">
           <span className="text-muted-foreground text-base w-5 shrink-0 pt-0.5 font-medium">3.</span>
@@ -69,7 +57,7 @@ export default function LearnReportSection({ go }: LearnReportSectionProps) {
           </a>
         </p>
         <p className="text-sm text-foreground leading-relaxed">
-          Заявление на повышение подается в специальном разделе на форуме:{" "}
+          Заявление на повышение подается в специальном разделе на госпортале по форме:{" "}
           <a
             href="https://forum.gtaprovince.ru/topic/995718-cgb-g-nevskiy-informacionnyy-razdel-otdeleniya-internatury"
             target="_blank"
