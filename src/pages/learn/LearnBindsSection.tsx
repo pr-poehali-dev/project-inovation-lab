@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Icon from "@/components/ui/icon";
 import { SectionId } from "./learnConfig";
 
@@ -6,6 +7,25 @@ interface LearnBindsSectionProps {
 }
 
 export default function LearnBindsSection({ go }: LearnBindsSectionProps) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      const el = document.createElement("textarea");
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -176,15 +196,17 @@ export default function LearnBindsSection({ go }: LearnBindsSectionProps) {
                 <span>Скопируйте вторую строку бинда:</span>
               </div>
               <button
-                onClick={() => navigator.clipboard.writeText(`bind 2 do На груди висит бейдж: "ЦГБ г. Невский | *Должность* | Отделение интернатуры | *Имя Фамилия*".`)}
+                onClick={() => handleCopy(`bind 2 do На груди висит бейдж: "ЦГБ г. Невский | *Должность* | Отделение интернатуры | *Имя Фамилия*".`)}
                 className="ml-2 sm:ml-5 bg-secondary border border-border rounded-sm px-4 py-3 text-left group relative hover:border-muted-foreground transition-colors overflow-x-auto"
               >
-                <code className="text-xs text-muted-foreground font-mono">
+                <code className="text-xs text-muted-foreground font-mono pr-24">
                   bind 2 do На груди висит бейдж: "ЦГБ г. Невский | *Должность* | Отделение интернатуры | *Имя Фамилия*".
                 </code>
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                  <Icon name="Copy" size={12} />
-                  Копировать
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs flex items-center gap-1 shrink-0">
+                  {copied
+                    ? <><Icon name="Check" size={12} className="text-green-400" /><span className="text-green-400 hidden sm:inline">Скопировано!</span></>
+                    : <><Icon name="Copy" size={12} className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" /><span className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity hidden sm:inline">Копировать</span></>
+                  }
                 </span>
               </button>
             </li>

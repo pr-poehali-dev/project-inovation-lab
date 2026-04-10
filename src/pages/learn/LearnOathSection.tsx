@@ -20,8 +20,17 @@ const OATH_LINES = [
 export default function LearnOathSection({ go }: LearnOathSectionProps) {
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
 
-  const handleCopy = (line: string, idx: number) => {
-    navigator.clipboard.writeText(line);
+  const handleCopy = async (line: string, idx: number) => {
+    try {
+      await navigator.clipboard.writeText(line);
+    } catch {
+      const el = document.createElement("textarea");
+      el.value = line;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+    }
     setCopiedIdx(idx);
     setTimeout(() => setCopiedIdx(null), 2000);
   };
