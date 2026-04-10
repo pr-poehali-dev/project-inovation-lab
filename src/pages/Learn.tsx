@@ -5,10 +5,10 @@ import { playClickSound } from "@/hooks/useSound";
 
 type SectionId = "intro" | "intern" | "intern-binds" | "feldsher";
 
-const NAV: { id: SectionId; label: string; icon: string; parent?: string }[] = [
+const NAV: { id: SectionId; label: string; icon: string; parent?: string; divider?: string }[] = [
   { id: "intro",        label: "Вступление",        icon: "Flag" },
   { id: "intern",       label: "Интерн",             icon: "GraduationCap" },
-  { id: "intern-binds", label: "Настройка биндов",   icon: "Keyboard", parent: "intern" },
+  { id: "intern-binds", label: "Настройка биндов",   icon: "Keyboard", parent: "intern", divider: "Шаг 1: Подготовка" },
   { id: "feldsher",     label: "Фельдшер",           icon: "Stethoscope" },
 ];
 
@@ -42,19 +42,25 @@ export default function Learn() {
               const isActive = active === item.id;
               const isChild = !!item.parent;
               return (
-                <button
-                  key={item.id}
-                  onClick={() => go(item.id)}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-sm transition-colors text-left rounded-none
-                    ${isChild ? "ml-4 pl-3 text-xs" : ""}
-                    ${isActive
-                      ? "bg-red-600/10 text-red-500 border-l-2 border-red-600"
-                      : "text-muted-foreground hover:text-foreground hover:bg-secondary border-l-2 border-transparent"
-                    }`}
-                >
-                  <Icon name={item.icon as "Flag"} size={isChild ? 14 : 16} className={isActive ? "text-red-500" : ""} />
-                  {item.label}
-                </button>
+                <div key={item.id}>
+                  {item.divider && (
+                    <p className="px-3 pt-3 pb-1 text-xs text-zinc-500 uppercase tracking-widest select-none">
+                      {item.divider}
+                    </p>
+                  )}
+                  <button
+                    onClick={() => go(item.id)}
+                    className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-sm transition-colors text-left rounded-none
+                      ${isChild ? "ml-4 pl-3 text-xs" : ""}
+                      ${isActive
+                        ? "bg-red-600/10 text-red-500 border-l-2 border-red-600"
+                        : "text-muted-foreground hover:text-foreground hover:bg-secondary border-l-2 border-transparent"
+                      }`}
+                  >
+                    <Icon name={item.icon as "Flag"} size={isChild ? 14 : 16} className={isActive ? "text-red-500" : ""} />
+                    {item.label}
+                  </button>
+                </div>
               );
             })}
           </nav>
