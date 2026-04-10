@@ -16,7 +16,7 @@ export default function LearnRadioSection({ go }: LearnRadioSectionProps) {
           <Icon name="ChevronLeft" size={14} />
           Назад к Интерну
         </button>
-        <p className="text-xs uppercase tracking-widest text-red-600 mb-1">Раздел</p>
+        <p className="text-xs uppercase tracking-widest text-red-600 mb-1">Шаг 1: Подготовка</p>
         <h1 className="text-3xl font-bold">Использование рации</h1>
       </div>
 

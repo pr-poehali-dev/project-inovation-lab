@@ -53,7 +53,7 @@ export default function LearnAbbrSection({ go }: LearnAbbrSectionProps) {
           <Icon name="ChevronLeft" size={14} />
           Назад к командам
         </button>
-        <p className="text-xs uppercase tracking-widest text-red-600 mb-1">Раздел</p>
+        <p className="text-xs uppercase tracking-widest text-red-600 mb-1">Шаг 1: Подготовка</p>
         <h1 className="text-3xl font-bold">Аббревиатуры</h1>
       </div>
 
