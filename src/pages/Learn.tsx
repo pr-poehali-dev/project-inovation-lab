@@ -2,42 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
-const SECTIONS_KEY = "admin_sections";
-const defaultSections = [
-  {
-    id: "intern",
-    title: "Интерн",
-    icon: "GraduationCap",
-    items: [
-      "Ознакомление с правилами внутреннего распорядка",
-      "Изучение структуры отделения и должностных инструкций",
-      "Знакомство с протоколами оказания медицинской помощи",
-      "Работа с медицинской документацией",
-      "Участие в утренних обходах и разборах клинических случаев",
-      "Освоение навыков работы в МИС",
-    ],
-  },
-  {
-    id: "feldsher",
-    title: "Фельдшер",
-    icon: "Stethoscope",
-    items: [
-      "Протоколы первичной диагностики пациентов",
-      "Алгоритмы оказания неотложной помощи",
-      "Ведение сестринской документации и карт наблюдения",
-      "Правила хранения и выдачи лекарственных средств",
-      "Взаимодействие с дежурным врачом и старшим медперсоналом",
-      "Инфекционная безопасность и работа с биоматериалом",
-    ],
-  },
-];
-
 export default function Learn() {
-  const sections = (() => {
-    try { return JSON.parse(localStorage.getItem(SECTIONS_KEY) || "null") || defaultSections; }
-    catch { return defaultSections; }
-  })();
-
   const [open, setOpen] = useState<string[]>([]);
   const navigate = useNavigate();
 
@@ -67,76 +32,153 @@ export default function Learn() {
         </div>
 
         <div className="flex flex-col gap-4">
-          {/* Блок вступления */}
+
+          {/* ── Вступление (статичный, не гармошка) ── */}
+          <div className="border border-border rounded-none overflow-hidden">
+            <div className="flex items-center gap-3 px-6 py-5 bg-card">
+              <Icon name="Flag" size={20} className="text-red-600" />
+              <span className="text-lg font-semibold">Вступление</span>
+            </div>
+            <div className="px-6 py-5 bg-background border-t border-border flex flex-col gap-4">
+              <p className="text-xl font-bold text-foreground">
+                Добро пожаловать в ЦГБ города Невский!
+              </p>
+              <p className="text-base text-foreground leading-relaxed">
+                С этого момента Вы являетесь сотрудником Отделения Интернатуры.
+              </p>
+              <p className="text-base text-foreground leading-relaxed">
+                На выход из Отделения Интернатуры и повышения до лаборанта вам дается{" "}
+                <span className="text-red-600 font-semibold">14 дней</span>.
+              </p>
+            </div>
+          </div>
+
+          {/* ── Интерн ── */}
           <div className="border border-border rounded-none overflow-hidden">
             <button
-              onClick={() => toggle("intro")}
+              onClick={() => toggle("intern")}
               className="w-full flex items-center justify-between px-6 py-5 bg-card hover:bg-secondary transition-colors"
             >
               <div className="flex items-center gap-3">
-                <Icon name="Flag" size={20} className="text-red-600" />
-                <span className="text-lg font-semibold">Вступление</span>
+                <Icon name="GraduationCap" size={20} className="text-red-600" />
+                <span className="text-lg font-semibold">Интерн</span>
               </div>
-              <Icon
-                name={open.includes("intro") ? "ChevronUp" : "ChevronDown"}
-                size={18}
-                className="text-muted-foreground"
-              />
+              <Icon name={open.includes("intern") ? "ChevronUp" : "ChevronDown"} size={18} className="text-muted-foreground" />
             </button>
 
-            {open.includes("intro") && (
-              <div className="px-6 py-5 bg-background border-t border-border flex flex-col gap-3">
-                <p className="text-xl font-bold text-foreground">
-                  Добро пожаловать в ЦГБ города Невский!
+            {open.includes("intern") && (
+              <div className="px-6 py-5 bg-background border-t border-border flex flex-col gap-5">
+                {/* Главная задача */}
+                <p className="text-xl font-bold text-red-400">
+                  Твоя первая и главная задача: Получить допуск к лечению.
                 </p>
-                <p className="text-sm text-foreground leading-relaxed">
-                  С этого момента Вы являетесь сотрудником Отделения Интернатуры.
+                <p className="text-base text-foreground leading-relaxed">
+                  До получения допуска к лечению вам нельзя абсолютно ничего. Лечить пациентов сможете только тогда, когда получите допуск к лечению.
                 </p>
-                <p className="text-sm text-foreground leading-relaxed">
-                  На выход из Отделения Интернатуры и повышения до лаборанта вам дается{" "}
-                  <span className="text-red-600 font-semibold">14 дней</span>.
-                </p>
+
+                <p className="text-base text-foreground font-medium">Чтобы получить допуск, вам нужно сдать:</p>
+
+                <ol className="flex flex-col gap-5">
+                  {/* 1 */}
+                  <li className="flex items-start gap-3">
+                    <span className="text-muted-foreground text-base w-5 shrink-0 pt-0.5">1</span>
+                    <span className="text-base text-foreground">Прослушать вступительную лекцию;</span>
+                  </li>
+
+                  {/* 2 */}
+                  <li className="flex flex-col gap-2">
+                    <div className="flex items-start gap-3">
+                      <span className="text-muted-foreground text-base w-5 shrink-0 pt-0.5">2</span>
+                      <span className="text-base text-foreground">Сдать устную речь;</span>
+                    </div>
+                    <div className="ml-8 border-l-2 border-red-600/40 pl-4 flex flex-col gap-1">
+                      <p className="text-sm text-muted-foreground italic">
+                        Устная речь — это бинды. Слово «Бинд» в РП мы не используем!
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        В устной речи мы проверяем, как Вы установили бинды и в случае чего, помогаем исправлять вместе с Вами.
+                      </p>
+                    </div>
+                  </li>
+
+                  {/* 3 */}
+                  <li className="flex flex-col gap-2">
+                    <div className="flex items-start gap-3">
+                      <span className="text-muted-foreground text-base w-5 shrink-0 pt-0.5">3</span>
+                      <span className="text-base text-foreground">Сдать Первичный Медицинский Экзамен;</span>
+                    </div>
+                    <div className="ml-8 border-l-2 border-red-600/40 pl-4 flex flex-col gap-2">
+                      <p className="text-sm text-foreground font-medium">Первичный Медицинский Экзамен (ПМЭ) включает в себя:</p>
+                      <ul className="flex flex-col gap-1.5">
+                        <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full border border-muted-foreground shrink-0" />
+                          Информацию о больнице, которую Вам расскажут в процессе обучения;
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full border border-muted-foreground shrink-0" />
+                          Практический экзамен по выдаче препаратов пациентам;
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full border border-muted-foreground shrink-0" />
+                          Вопросы по Внутреннему уставу нашей больницы.
+                        </li>
+                      </ul>
+                      <a
+                        href="https://forum.gtaprovince.ru/topic/995741-cgb-g-nevskiy-vnutrenniy-ustav/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm text-red-500 hover:text-red-400 transition-colors font-medium mt-1"
+                      >
+                        <Icon name="ExternalLink" size={13} />
+                        Внутренний Устав ЦГБ-Н
+                      </a>
+                    </div>
+                  </li>
+
+                  {/* 4 */}
+                  <li className="flex items-start gap-3">
+                    <span className="text-muted-foreground text-base w-5 shrink-0 pt-0.5">4</span>
+                    <span className="text-base text-foreground">Клятву врача.</span>
+                  </li>
+                </ol>
               </div>
             )}
           </div>
 
-          {sections.map((section) => {
-            const isOpen = open.includes(section.id);
-            return (
-              <div
-                key={section.id}
-                className="border border-border rounded-none overflow-hidden"
-              >
-                <button
-                  onClick={() => toggle(section.id)}
-                  className="w-full flex items-center justify-between px-6 py-5 bg-card hover:bg-secondary transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon name={section.icon as "GraduationCap"} size={20} className="text-red-600" />
-                    <span className="text-lg font-semibold">{section.title}</span>
-                  </div>
-                  <Icon
-                    name={isOpen ? "ChevronUp" : "ChevronDown"}
-                    size={18}
-                    className="text-muted-foreground"
-                  />
-                </button>
-
-                {isOpen && (
-                  <div className="px-6 py-5 bg-background border-t border-border">
-                    <ul className="flex flex-col gap-3">
-                      {section.items.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-sm text-foreground">
-                          <span className="mt-1 w-2 h-2 rounded-full bg-red-600 shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+          {/* ── Фельдшер ── */}
+          <div className="border border-border rounded-none overflow-hidden">
+            <button
+              onClick={() => toggle("feldsher")}
+              className="w-full flex items-center justify-between px-6 py-5 bg-card hover:bg-secondary transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <Icon name="Stethoscope" size={20} className="text-red-600" />
+                <span className="text-lg font-semibold">Фельдшер</span>
               </div>
-            );
-          })}
+              <Icon name={open.includes("feldsher") ? "ChevronUp" : "ChevronDown"} size={18} className="text-muted-foreground" />
+            </button>
+
+            {open.includes("feldsher") && (
+              <div className="px-6 py-5 bg-background border-t border-border">
+                <ul className="flex flex-col gap-3">
+                  {[
+                    "Протоколы первичной диагностики пациентов",
+                    "Алгоритмы оказания неотложной помощи",
+                    "Ведение сестринской документации и карт наблюдения",
+                    "Правила хранения и выдачи лекарственных средств",
+                    "Взаимодействие с дежурным врачом и старшим медперсоналом",
+                    "Инфекционная безопасность и работа с биоматериалом",
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-sm text-foreground">
+                      <span className="mt-1 w-2 h-2 rounded-full bg-red-600 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
     </div>
