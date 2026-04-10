@@ -10,7 +10,7 @@ const FLOORS = [
   { num: "2 этаж", desc: "проведение процедур и операций;" },
   { num: "3 этаж", desc: "выдача мед.карт, проведение мед. комиссий (для 5+ рангов);" },
   { num: "4 этаж", desc: "оказание услуг организаций при отделениях (Травматолого-ортопедический центр, НИИ Эпидемиологии, Стоматологическая поликлиника «Дентист»);" },
-  { num: "5 этаж", desc: "служебный, отдых сотрудников, проведение собеседований.", noHighlight: true },
+  { num: "5 этаж", desc: "служебный, отдых сотрудников, проведение собеседований." },
 ];
 
 export default function LearnFloorsSection({ go }: LearnFloorsSectionProps) {
@@ -39,7 +39,7 @@ export default function LearnFloorsSection({ go }: LearnFloorsSectionProps) {
           <li key={num} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
             <span className="shrink-0 mt-0.5">–</span>
             <span>
-              <span className={noHighlight ? "font-medium" : "text-red-500 font-medium"}>{num}</span>
+              <span className="text-red-500 font-medium">{num}</span>
               {" "}– {desc}
             </span>
           </li>
