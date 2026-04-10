@@ -31,7 +31,7 @@ export default function LearnActivitySection({ go }: LearnActivitySectionProps) 
         <div className="flex items-start gap-3 bg-green-950/30 border border-green-700/50 rounded-sm px-4 py-3">
           <Icon name="LogIn" size={16} className="text-green-400 shrink-0 mt-0.5" />
           <p className="text-sm text-foreground leading-relaxed">
-            При заступлении на смену Вы обязательно должны нажать кнопку{" "}
+            При заступлении на смену —{" "}
             <code className="bg-green-900/40 border border-green-700/50 rounded px-1.5 py-0.5 text-xs font-mono text-green-300">!онлайн</code>.
           </p>
         </div>
