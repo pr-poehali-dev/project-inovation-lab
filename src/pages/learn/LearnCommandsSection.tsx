@@ -49,6 +49,19 @@ export default function LearnCommandsSection({ go }: LearnCommandsSectionProps) 
           </div>
         ))}
       </div>
+
+      <p className="text-sm text-muted-foreground">
+        Информационный раздел нашей больницы на госпортале со всеми командами:{" "}
+        <a
+          href="https://forum.gtaprovince.ru/topic/995733-cgb-g-nevskiy-informacionnyy-razdel/?do=findComment&comment=6982167"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-red-500 hover:text-red-400 transition-colors font-medium"
+        >
+          Раздел 8. Перечень команд.
+          <Icon name="ExternalLink" size={13} />
+        </a>
+      </p>
     </div>
   );
 }
