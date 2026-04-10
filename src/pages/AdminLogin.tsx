@@ -44,6 +44,12 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
+        <button
+          onClick={() => { playClickSound(); navigate("/"); }}
+          className="flex items-center gap-2 text-zinc-500 hover:text-white text-sm transition-colors mb-8"
+        >
+          ← На главную
+        </button>
         <p className="text-xs uppercase tracking-widest text-red-600 mb-2 text-center">ЦГБ Невский</p>
         <h1 className="text-2xl font-bold text-white text-center mb-8 tracking-tight">
           {mode === "login" ? "Вход в кабинет" : "Регистрация"}
