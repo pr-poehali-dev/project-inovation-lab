@@ -344,6 +344,51 @@ export default function Learn() {
                     <p className="text-sm text-foreground">— вы всё сделали правильно.</p>
                   </div>
                 </div>
+
+                {/* Шаг 3 */}
+                <div className="flex flex-col gap-3 pt-2 border-t border-border">
+                  <p className="text-base font-semibold text-center text-foreground">Шаг 3: Настройка второй строки (Бейдж)</p>
+
+                  <ol className="flex flex-col gap-4">
+                    <li className="flex flex-col gap-2 text-sm text-foreground">
+                      <div className="flex items-start gap-2">
+                        <span className="shrink-0 font-medium text-muted-foreground">1.</span>
+                        <span>Скопируйте вторую строку бинда:</span>
+                      </div>
+                      <button
+                        onClick={() => navigator.clipboard.writeText(`bind 2 do На груди висит бейдж: "ЦГБ г. Невский | *Должность* | Отделение интернатуры | *Имя Фамилия*".`)}
+                        className="ml-5 bg-secondary border border-border rounded-sm px-4 py-3 text-left group relative hover:border-muted-foreground transition-colors"
+                      >
+                        <code className="text-xs text-muted-foreground font-mono">
+                          bind 2 do На груди висит бейдж: "ЦГБ г. Невский | *Должность* | Отделение интернатуры | *Имя Фамилия*".
+                        </code>
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                          <Icon name="Copy" size={12} />
+                          Копировать
+                        </span>
+                      </button>
+                    </li>
+
+                    <li className="flex flex-col gap-3 text-sm text-foreground">
+                      <div className="flex items-start gap-2">
+                        <span className="shrink-0 font-medium text-muted-foreground">2.</span>
+                        <span>Вставьте строку в консоль и отредактируйте два поля:</span>
+                      </div>
+                      <div className="ml-5 flex flex-col gap-2">
+                        <p className="text-sm text-foreground">
+                          Замените{" "}
+                          <code className="bg-secondary border border-border rounded px-1.5 py-0.5 text-xs font-mono">*Должность*</code>{" "}
+                          на <span className="font-bold">Интерн</span>.
+                        </p>
+                        <p className="text-sm text-foreground">
+                          Замените{" "}
+                          <code className="bg-secondary border border-border rounded px-1.5 py-0.5 text-xs font-mono">*Имя Фамилия*</code>{" "}
+                          на ваше <span className="font-bold">ИМЯ и ФАМИЛИЮ</span> на русском языке.
+                        </p>
+                      </div>
+                    </li>
+                  </ol>
+                </div>
               </div>
             </div>
           )}
