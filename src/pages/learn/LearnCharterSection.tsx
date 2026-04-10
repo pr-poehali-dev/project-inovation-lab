@@ -50,6 +50,13 @@ export default function LearnCharterSection({ go }: LearnCharterSectionProps) {
 
       <p className="text-base font-semibold text-muted-foreground">2.4. Уставная документация</p>
 
+      <div className="flex items-start gap-3 bg-orange-500/10 border border-orange-500/40 px-4 py-3">
+        <Icon name="TriangleAlert" size={16} className="text-orange-400 shrink-0 mt-0.5" />
+        <p className="text-sm text-orange-300 leading-relaxed">
+          <span className="font-bold">ВАЖНО:</span> Чтобы не нарушать правила и избежать наказания, находясь во фракции — советуем Вам ознакомиться с данным перечнем правил.
+        </p>
+      </div>
+
       <div className="flex flex-col gap-3">
         {DOCS.map((doc) => (
           <a
