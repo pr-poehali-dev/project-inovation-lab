@@ -18,12 +18,12 @@ const OATH_LINES = [
 ];
 
 export default function LearnOathSection({ go }: LearnOathSectionProps) {
-  const [copied, setCopied] = useState(false);
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(OATH_LINES.join("\n"));
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopy = (line: string, idx: number) => {
+    navigator.clipboard.writeText(line);
+    setCopiedIdx(idx);
+    setTimeout(() => setCopiedIdx(null), 2000);
   };
 
   return (
@@ -55,25 +55,24 @@ export default function LearnOathSection({ go }: LearnOathSectionProps) {
         </p>
       </div>
 
-      {/* Текст клятвы */}
-      <button
-        onClick={handleCopy}
-        className="group relative border border-red-600/50 rounded-sm px-5 py-4 text-left hover:border-red-500 transition-colors bg-red-950/10"
-      >
-        <div className="flex flex-col gap-1.5">
-          {OATH_LINES.map((line, idx) => (
-            <p key={idx} className="text-sm font-mono text-foreground leading-relaxed">
-              {line}
-            </p>
-          ))}
-        </div>
-        <div className="absolute top-3 right-3 flex items-center gap-1 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
-          {copied
-            ? <><Icon name="Check" size={13} className="text-green-400" /><span className="text-green-400">Скопировано!</span></>
-            : <><Icon name="Copy" size={13} /><span>Копировать всё</span></>
-          }
-        </div>
-      </button>
+      {/* Строки клятвы — каждая копируется отдельно */}
+      <div className="flex flex-col gap-2 border border-red-600/50 rounded-sm p-4 bg-red-950/10">
+        {OATH_LINES.map((line, idx) => (
+          <button
+            key={idx}
+            onClick={() => handleCopy(line, idx)}
+            className="group relative flex items-center justify-between gap-3 bg-secondary/40 hover:bg-secondary border border-border hover:border-muted-foreground rounded-sm px-3 py-2.5 text-left transition-colors"
+          >
+            <p className="text-sm font-mono text-foreground leading-relaxed pr-16">{line}</p>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-xs shrink-0">
+              {copiedIdx === idx
+                ? <><Icon name="Check" size={13} className="text-green-400" /><span className="text-green-400">Скопировано!</span></>
+                : <><Icon name="Copy" size={13} className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" /><span className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">Копировать</span></>
+              }
+            </span>
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
