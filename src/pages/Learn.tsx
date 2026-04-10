@@ -387,7 +387,34 @@ export default function Learn() {
                         </p>
                       </div>
                     </li>
+
+                    {/* 3 */}
+                    <li className="flex flex-col gap-2 text-sm text-foreground">
+                      <div className="flex items-start gap-2">
+                        <span className="shrink-0 font-medium text-muted-foreground">3.</span>
+                        <span>Нажмите <span className="font-bold">Enter</span>.</span>
+                      </div>
+                      <div className="ml-5 border border-border rounded-sm p-4 flex flex-col gap-2 bg-secondary/40">
+                        <p className="text-sm font-semibold text-foreground">Проверка:</p>
+                        <p className="text-sm text-foreground">Если в консоли появилась строка, содержащая <span className="font-bold">Интерн</span> и ваше имя с фамилией, вы сделали всё верно.</p>
+                      </div>
+                    </li>
                   </ol>
+                </div>
+
+                {/* Шаг 4 */}
+                <div className="flex flex-col gap-4 pt-2 border-t border-border">
+                  <p className="text-base font-semibold text-center text-foreground">Шаг 4: Завершение настройки</p>
+                  <p className="text-sm text-foreground leading-relaxed">
+                    Остальные строки биндов не требуют ручной корректировки ваших данных.
+                  </p>
+                  <p className="text-sm text-foreground leading-relaxed">
+                    Просто продолжайте <span className="font-bold">построчно</span> копировать и вставлять все оставшиеся бинды из списка, нажимая <span className="font-bold">Enter</span> после каждой строки.
+                  </p>
+
+                  <div className="text-center py-4">
+                    <p className="text-xl font-bold text-red-500">Поздравляем! Настройка биндов завершена. Удачи в обучении!</p>
+                  </div>
                 </div>
               </div>
             </div>
