@@ -1,4 +1,4 @@
-export type SectionId = "intro" | "intern" | "intern-binds" | "intern-radio" | "intern-reports" | "intern-commands" | "intern-schedule" | "intern-floors" | "feldsher";
+export type SectionId = "intro" | "intern" | "intern-binds" | "intern-radio" | "intern-reports" | "intern-commands" | "intern-schedule" | "intern-floors" | "intern-activity" | "feldsher";
 
 export const NAV: { id: SectionId; label: string; icon: string; parent?: string; divider?: string }[] = [
   { id: "intro",           label: "Вступление",         icon: "Flag" },
@@ -8,6 +8,7 @@ export const NAV: { id: SectionId; label: string; icon: string; parent?: string;
   { id: "intern-reports",  label: "Доклады в рацию",     icon: "Megaphone",    parent: "intern" },
   { id: "intern-commands",  label: "Основные команды",    icon: "Terminal",     parent: "intern" },
   { id: "intern-schedule", label: "График работы",          icon: "CalendarDays", parent: "intern", divider: "Шаг 2: Устав и правила" },
-  { id: "intern-floors",  label: "Распределение этажей",  icon: "Building2",    parent: "intern" },
-  { id: "feldsher",       label: "Фельдшер",              icon: "Stethoscope" },
+  { id: "intern-floors",   label: "Распределение этажей",   icon: "Building2",    parent: "intern" },
+  { id: "intern-activity", label: "Журнал активности (ЖА)", icon: "ClipboardList", parent: "intern" },
+  { id: "feldsher",        label: "Фельдшер",               icon: "Stethoscope" },
 ];

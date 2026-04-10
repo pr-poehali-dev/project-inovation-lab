@@ -10,6 +10,7 @@ import LearnReportsSection from "./learn/LearnReportsSection";
 import LearnCommandsSection from "./learn/LearnCommandsSection";
 import LearnScheduleSection from "./learn/LearnScheduleSection";
 import LearnFloorsSection from "./learn/LearnFloorsSection";
+import LearnActivitySection from "./learn/LearnActivitySection";
 
 export default function Learn() {
   const [active, setActive] = useState<SectionId>("intro");
@@ -161,6 +162,9 @@ export default function Learn() {
 
           {/* РАСПРЕДЕЛЕНИЕ ЭТАЖЕЙ */}
           {active === "intern-floors" && <LearnFloorsSection go={go} />}
+
+          {/* ЖУРНАЛ АКТИВНОСТИ */}
+          {active === "intern-activity" && <LearnActivitySection go={go} />}
 
           {/* ФЕЛЬДШЕР */}
           {active === "feldsher" && (
