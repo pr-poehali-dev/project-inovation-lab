@@ -48,48 +48,34 @@ export default function Contacts() {
 
         <div className="flex flex-col gap-4">
           {staff.map((person) => (
-            <div
+            <a
               key={person.nickname}
-              className="border border-border overflow-hidden"
+              href={person.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={playClickSound}
+              className="group block border border-border hover:border-red-600/60 transition-all duration-300 overflow-hidden cursor-pointer"
             >
               <div className="flex items-stretch">
-                {/* Цветная вертикальная полоса */}
-                <div className={`w-1 shrink-0 ${person.badgeColor}`} />
+                <div className={`w-1 shrink-0 ${person.badgeColor} group-hover:w-1.5 transition-all duration-300`} />
 
                 <div className="flex-1 px-6 py-5 flex flex-col gap-2">
-                  {/* Должность */}
                   <p className="text-xs uppercase tracking-widest text-muted-foreground">
                     {person.role}
                   </p>
-
-                  {/* Имя */}
-                  <p className="text-xl md:text-2xl font-bold text-foreground">
+                  <p className="text-xl md:text-2xl font-bold text-foreground group-hover:text-red-500 transition-colors duration-300">
                     {person.name}
                   </p>
-
-                  {/* Кнопка перехода */}
-                  <div className="mt-2">
-                    <a
-                      href={person.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={playClickSound}
-                      className={`inline-flex items-center gap-2 text-xs uppercase tracking-wider text-white px-4 py-2 ${person.badgeColor} hover:opacity-80 transition-opacity duration-200 font-semibold`}
-                    >
-                      <Icon name="ExternalLink" size={13} />
-                      Перейти на страницу
-                    </a>
-                  </div>
                 </div>
 
-                {/* Бейдж справа */}
-                <div className="flex items-center pr-6">
+                <div className="flex items-center pr-6 gap-3">
+                  <Icon name="ExternalLink" size={15} className="text-muted-foreground group-hover:text-red-400 transition-colors duration-300" />
                   <span className={`text-xs uppercase tracking-wider text-white px-2.5 py-1 ${person.badgeColor} font-semibold`}>
                     {person.badge}
                   </span>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
