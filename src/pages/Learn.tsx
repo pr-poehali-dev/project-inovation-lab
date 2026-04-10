@@ -7,6 +7,7 @@ import LearnSidebar from "./learn/LearnSidebar";
 import LearnBindsSection from "./learn/LearnBindsSection";
 import LearnRadioSection from "./learn/LearnRadioSection";
 import LearnReportsSection from "./learn/LearnReportsSection";
+import LearnCommandsSection from "./learn/LearnCommandsSection";
 
 export default function Learn() {
   const [active, setActive] = useState<SectionId>("intro");
@@ -149,6 +150,9 @@ export default function Learn() {
 
           {/* ДОКЛАДЫ В РАЦИЮ */}
           {active === "intern-reports" && <LearnReportsSection go={go} />}
+
+          {/* ОСНОВНЫЕ КОМАНДЫ */}
+          {active === "intern-commands" && <LearnCommandsSection go={go} />}
 
           {/* ФЕЛЬДШЕР */}
           {active === "feldsher" && (
