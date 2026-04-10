@@ -8,6 +8,7 @@ import LearnBindsSection from "./learn/LearnBindsSection";
 import LearnRadioSection from "./learn/LearnRadioSection";
 import LearnReportsSection from "./learn/LearnReportsSection";
 import LearnCommandsSection from "./learn/LearnCommandsSection";
+import LearnScheduleSection from "./learn/LearnScheduleSection";
 
 export default function Learn() {
   const [active, setActive] = useState<SectionId>("intro");
@@ -153,6 +154,9 @@ export default function Learn() {
 
           {/* ОСНОВНЫЕ КОМАНДЫ */}
           {active === "intern-commands" && <LearnCommandsSection go={go} />}
+
+          {/* ГРАФИК РАБОТЫ */}
+          {active === "intern-schedule" && <LearnScheduleSection go={go} />}
 
           {/* ФЕЛЬДШЕР */}
           {active === "feldsher" && (
