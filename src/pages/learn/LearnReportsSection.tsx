@@ -64,7 +64,7 @@ export default function LearnReportsSection({ go }: LearnReportsSectionProps) {
             onClick={() => setMaleOpen((v) => !v)}
             className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
           >
-            <span>Мужские доклады</span>
+            <span>♂ Мужские доклады</span>
             <Icon
               name="ChevronDown"
               size={16}
@@ -94,7 +94,7 @@ export default function LearnReportsSection({ go }: LearnReportsSectionProps) {
             onClick={() => setFemaleOpen((v) => !v)}
             className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
           >
-            <span>Женские доклады</span>
+            <span>♀ Женские доклады</span>
             <Icon
               name="ChevronDown"
               size={16}
