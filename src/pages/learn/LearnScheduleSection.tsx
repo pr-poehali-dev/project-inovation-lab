@@ -58,6 +58,19 @@ export default function LearnScheduleSection({ go }: LearnScheduleSectionProps) 
           </p>
         </div>
       </div>
+
+      <p className="text-sm text-muted-foreground">
+        Информационный раздел нашей больницы на госпортале по графику работы:{" "}
+        <a
+          href="https://forum.gtaprovince.ru/topic/995733-cgb-g-nevskiy-informacionnyy-razdel/?do=findComment&comment=6982140"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-red-500 hover:text-red-400 transition-colors font-medium"
+        >
+          Раздел 2. График работы.
+          <Icon name="ExternalLink" size={13} />
+        </a>
+      </p>
     </div>
   );
 }
