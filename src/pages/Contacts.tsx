@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
+import { playClickSound } from "@/hooks/useSound";
 
 const staff = [
   {
@@ -47,16 +48,13 @@ export default function Contacts() {
 
         <div className="flex flex-col gap-4">
           {staff.map((person) => (
-            <a
+            <div
               key={person.nickname}
-              href={person.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block border border-border hover:border-red-600/60 transition-all duration-300 overflow-hidden"
+              className="border border-border overflow-hidden"
             >
               <div className="flex items-stretch">
                 {/* Цветная вертикальная полоса */}
-                <div className={`w-1 shrink-0 ${person.badgeColor} transition-all duration-300 group-hover:w-1.5`} />
+                <div className={`w-1 shrink-0 ${person.badgeColor}`} />
 
                 <div className="flex-1 px-6 py-5 flex flex-col gap-2">
                   {/* Должность */}
@@ -65,17 +63,22 @@ export default function Contacts() {
                   </p>
 
                   {/* Имя */}
-                  <p className="text-xl md:text-2xl font-bold text-foreground group-hover:text-red-500 transition-colors duration-300">
+                  <p className="text-xl md:text-2xl font-bold text-foreground">
                     {person.name}
                   </p>
 
-                  {/* Никнейм + иконка */}
-                  <div className="flex items-center gap-1.5 mt-1">
-                    <Icon name="Link" size={13} className="text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground group-hover:text-red-400 transition-colors duration-300 font-mono">
-                      {person.nickname}
-                    </span>
-                    <Icon name="ExternalLink" size={13} className="text-muted-foreground group-hover:text-red-400 transition-colors duration-300 ml-0.5" />
+                  {/* Кнопка перехода */}
+                  <div className="mt-2">
+                    <a
+                      href={person.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={playClickSound}
+                      className={`inline-flex items-center gap-2 text-xs uppercase tracking-wider text-white px-4 py-2 ${person.badgeColor} hover:opacity-80 transition-opacity duration-200 font-semibold`}
+                    >
+                      <Icon name="ExternalLink" size={13} />
+                      Перейти на страницу
+                    </a>
                   </div>
                 </div>
 
@@ -86,7 +89,7 @@ export default function Contacts() {
                   </span>
                 </div>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </div>
