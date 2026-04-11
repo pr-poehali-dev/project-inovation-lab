@@ -5,10 +5,12 @@ import Icon from "@/components/ui/icon";
 
 import {
   Role, Tab, AccessUser,
-  HeroData, Section, StaffMember, Command, Floor, Department, CharterDoc, Report,
+  Section, StaffMember, Command, Floor, Department, CharterDoc, Report,
+  HeroData, AbbrItem, RadioCommand, RadioRule,
   defaultHero, defaultSections, defaultStaff, defaultCommands, defaultFloors,
   defaultDepartments, defaultCharter, defaultOathLines, defaultMaleReports,
-  defaultFemaleReports, defaultSchedule,
+  defaultFemaleReports, defaultSchedule, defaultAbbr, defaultRadioCommands,
+  defaultRadioRules, defaultActivityData, defaultIntroData, defaultInternExam,
 } from "./admin/adminTypes";
 import AdminSiteContent from "./admin/AdminSiteContent";
 import AdminAccessPassword from "./admin/AdminAccessPassword";
@@ -18,14 +20,19 @@ const API = "https://functions.poehali.dev/ee0c9d49-3da0-4e2e-a2ab-1f68f29a1405"
 const ALL_TABS: { id: Tab; label: string; icon: string; superOnly?: boolean }[] = [
   { id: "hero",        label: "Главная",     icon: "Home",          superOnly: true },
   { id: "staff",       label: "Состав",      icon: "Users",         superOnly: true },
+  { id: "intro",       label: "Вступление",  icon: "Flag",          superOnly: true },
+  { id: "intern_exam", label: "Интерн",      icon: "GraduationCap", superOnly: true },
   { id: "sections",    label: "Обучение",    icon: "BookOpen" },
   { id: "commands",    label: "Команды",     icon: "Terminal",      superOnly: true },
+  { id: "radio",       label: "Рация",       icon: "Radio",         superOnly: true },
+  { id: "reports",     label: "Доклады",     icon: "Megaphone",     superOnly: true },
+  { id: "abbr",        label: "Аббревиат.",  icon: "BookOpen",      superOnly: true },
   { id: "schedule",    label: "Расписание",  icon: "Calendar",      superOnly: true },
   { id: "floors",      label: "Этажи",       icon: "Building2",     superOnly: true },
+  { id: "activity",    label: "ЖА",          icon: "ClipboardList", superOnly: true },
   { id: "departments", label: "Отделения",   icon: "Network",       superOnly: true },
   { id: "charter",     label: "Уставы",      icon: "ScrollText",    superOnly: true },
-  { id: "oath",        label: "Клятва",      icon: "GraduationCap", superOnly: true },
-  { id: "reports",     label: "Доклады",     icon: "Megaphone",     superOnly: true },
+  { id: "oath",        label: "Клятва",      icon: "Star",          superOnly: true },
   { id: "access",      label: "Доступы",     icon: "Shield",        superOnly: true },
   { id: "password",    label: "Мой пароль",  icon: "KeyRound" },
 ];
@@ -51,6 +58,12 @@ export default function AdminPanel() {
   const [maleReports, setMaleReports] = useState<Report[]>(defaultMaleReports);
   const [femaleReports, setFemaleReports] = useState<Report[]>(defaultFemaleReports);
   const [schedule, setSchedule] = useState(defaultSchedule);
+  const [abbr, setAbbr] = useState<AbbrItem[]>(defaultAbbr);
+  const [radioCommands, setRadioCommands] = useState<RadioCommand[]>(defaultRadioCommands);
+  const [radioRules, setRadioRules] = useState<RadioRule[]>(defaultRadioRules);
+  const [activityData, setActivityData] = useState(defaultActivityData);
+  const [introData, setIntroData] = useState(defaultIntroData);
+  const [internExam, setInternExam] = useState(defaultInternExam);
 
   // Access state
   const [accessUsers, setAccessUsers] = useState<AccessUser[]>([]);
@@ -101,6 +114,12 @@ export default function AdminPanel() {
       if (d.data.oath_lines) setOathLines(d.data.oath_lines);
       if (d.data.reports_male) setMaleReports(d.data.reports_male);
       if (d.data.reports_female) setFemaleReports(d.data.reports_female);
+      if (d.data.abbr) setAbbr(d.data.abbr);
+      if (d.data.radio_commands) setRadioCommands(d.data.radio_commands);
+      if (d.data.radio_rules) setRadioRules(d.data.radio_rules);
+      if (d.data.activity) setActivityData(d.data.activity);
+      if (d.data.intro_data) setIntroData(d.data.intro_data);
+      if (d.data.intern_exam) setInternExam(d.data.intern_exam);
     });
   }, [me, authFetch]);
 
@@ -184,6 +203,12 @@ export default function AdminPanel() {
             oathLines={oathLines} setOathLines={setOathLines}
             maleReports={maleReports} setMaleReports={setMaleReports}
             femaleReports={femaleReports} setFemaleReports={setFemaleReports}
+            abbr={abbr} setAbbr={setAbbr}
+            radioCommands={radioCommands} setRadioCommands={setRadioCommands}
+            radioRules={radioRules} setRadioRules={setRadioRules}
+            activityData={activityData} setActivityData={setActivityData}
+            introData={introData} setIntroData={setIntroData}
+            internExam={internExam} setInternExam={setInternExam}
           />
           <AdminAccessPassword
             tab={tab}

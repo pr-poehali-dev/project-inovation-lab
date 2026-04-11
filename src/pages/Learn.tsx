@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { playClickSound } from "@/hooks/useSound";
 import { SectionId } from "./learn/learnConfig";
+import { useSiteData } from "@/hooks/useSiteData";
+import { defaultIntroData, defaultInternExam } from "@/pages/admin/adminTypes";
 import LearnSidebar from "./learn/LearnSidebar";
 import LearnBindsSection from "./learn/LearnBindsSection";
 import LearnRadioSection from "./learn/LearnRadioSection";
@@ -42,6 +44,8 @@ export default function Learn() {
   };
 
   const go = (id: SectionId) => { playClickSound(); setActive(id); };
+  const introData = useSiteData("intro_data", defaultIntroData);
+  const internExam = useSiteData("intern_exam", defaultInternExam);
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
@@ -80,21 +84,17 @@ export default function Learn() {
                 <p className="text-xs uppercase tracking-widest text-red-600 mb-1">Добро пожаловать</p>
                 <h1 className="text-3xl font-bold">Вступление</h1>
               </div>
-              <p className="text-2xl font-bold text-foreground">
-                Добро пожаловать в ЦГБ города Невский!
-              </p>
-              <p className="text-base text-foreground leading-relaxed">
-                С этого момента Вы являетесь сотрудником Отделения Интернатуры.
-              </p>
+              <p className="text-2xl font-bold text-foreground">{introData.welcome}</p>
+              <p className="text-base text-foreground leading-relaxed">{introData.line1}</p>
               <p className="text-base text-foreground leading-relaxed">
                 На выход из Отделения Интернатуры и повышения до лаборанта вам дается{" "}
-                <span className="text-red-600 font-semibold">14 дней</span>.
+                <span className="text-red-600 font-semibold">{introData.days_total} дней</span>.
               </p>
               <p className="text-base text-foreground leading-relaxed">
-                За <span className="text-red-600 font-bold">7 дней</span> — повыситься до <strong>Фельдшера.</strong>
+                За <span className="text-red-600 font-bold">{introData.days_feldsher} дней</span> — повыситься до <strong>Фельдшера.</strong>
               </p>
               <p className="text-base text-foreground leading-relaxed">
-                После повышения ещё <span className="text-red-600 font-bold">7 дней</span> — выйти из ОИ.
+                После повышения ещё <span className="text-red-600 font-bold">{introData.days_feldsher} дней</span> — выйти из ОИ.
               </p>
             </div>
           )}
@@ -107,12 +107,8 @@ export default function Learn() {
                 <h1 className="text-3xl font-bold">Интерн</h1>
               </div>
 
-              <p className="text-xl font-bold text-red-400">
-                Твоя первая и главная задача: Получить допуск к лечению.
-              </p>
-              <p className="text-base text-foreground leading-relaxed">
-                До получения допуска к лечению вам нельзя абсолютно ничего. Лечить пациентов сможете только тогда, когда получите допуск к лечению.
-              </p>
+              <p className="text-xl font-bold text-red-400">{internExam.title}</p>
+              <p className="text-base text-foreground leading-relaxed">{internExam.desc}</p>
 
               <p className="text-base text-foreground font-medium">Чтобы получить допуск, вам нужно сдать:</p>
 
@@ -134,12 +130,8 @@ export default function Learn() {
                     <p className="text-sm text-muted-foreground">
                       В устной речи мы проверяем, как Вы установили бинды и в случае чего, помогаем исправлять вместе с Вами.
                     </p>
-                    <a
-                      href="https://forum.gtaprovince.ru/topic/995732-cgb-g-nevskiy-bindy-dlya-sotrudnikov/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm text-red-500 hover:text-red-400 transition-colors font-medium mt-1"
-                    >
+                    <a href={internExam.binds_link} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm text-red-500 hover:text-red-400 transition-colors font-medium mt-1">
                       <Icon name="ExternalLink" size={13} />
                       Бинды для сотрудников
                     </a>
@@ -154,23 +146,15 @@ export default function Learn() {
                   <div className="ml-8 border-l-2 border-red-600/40 pl-4 flex flex-col gap-2">
                     <p className="text-sm text-foreground font-medium">Первичный Медицинский Экзамен (ПМЭ) включает в себя:</p>
                     <ul className="flex flex-col gap-1.5">
-                      {[
-                        "Информацию о больнице, которую Вам расскажут в процессе обучения;",
-                        "Практический экзамен по выдаче препаратов пациентам;",
-                        "Вопросы по Внутреннему уставу нашей больницы.",
-                      ].map((t, i) => (
+                      {internExam.exam_items.map((t, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                           <span className="mt-1.5 w-1.5 h-1.5 rounded-full border border-muted-foreground shrink-0" />
                           {t}
                         </li>
                       ))}
                     </ul>
-                    <a
-                      href="https://forum.gtaprovince.ru/topic/995741-cgb-g-nevskiy-vnutrenniy-ustav/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm text-red-500 hover:text-red-400 transition-colors font-medium mt-1"
-                    >
+                    <a href={internExam.charter_link} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm text-red-500 hover:text-red-400 transition-colors font-medium mt-1">
                       <Icon name="ExternalLink" size={13} />
                       Внутренний Устав ЦГБ-Н
                     </a>

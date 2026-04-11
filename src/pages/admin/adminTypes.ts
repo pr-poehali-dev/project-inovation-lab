@@ -1,5 +1,10 @@
 export type Role = "super_admin" | "editor";
-export type Tab = "hero" | "staff" | "sections" | "schedule" | "commands" | "floors" | "departments" | "charter" | "oath" | "reports" | "access" | "password";
+export type Tab =
+  | "hero" | "staff" | "sections" | "schedule" | "commands"
+  | "floors" | "departments" | "charter" | "oath" | "reports"
+  | "abbr" | "radio" | "activity" | "intro" | "intern_exam"
+  | "access" | "password";
+
 export type Report = { label: string; template: string };
 export type AccessUser = { nickname: string; role: Role; created_at: string; created_by: string | null };
 
@@ -10,6 +15,10 @@ export type Command = { cmd: string; desc: string };
 export type Floor = { num: string; desc: string };
 export type Department = { abbr: string; full: string; color: string };
 export type CharterDoc = { abbr: string; title: string; href: string };
+export type AbbrItem = { abbr: string; full: string };
+export type RadioCommand = { cmd: string; desc: string };
+export type RadioRule = { text: string };
+export type ActivityLink = { label: string; href: string };
 
 export const BADGE_COLORS = ["bg-red-600", "bg-blue-600", "bg-green-600", "bg-yellow-600", "bg-purple-600", "bg-zinc-600"];
 export const DEPT_COLORS = ["text-green-400", "text-sky-400", "text-red-400", "text-pink-400", "text-orange-400", "text-yellow-400", "text-purple-400"];
@@ -79,4 +88,79 @@ export const defaultSchedule = {
   break: "с 14:00 до 15:00",
   sunday: "выходной для сотрудников без наказаний",
   note: "Сотрудники с наказаниями работают в воскресенье по субботнему графику.",
+};
+export const defaultAbbr: AbbrItem[] = [
+  { abbr: "МЗ",     full: "Министерство Здравоохранения" },
+  { abbr: "ЦГБ-Н", full: "Центральная Городская Больница города Невский" },
+  { abbr: "ОПСГО", full: "Общие Правила Сотрудников Государственных Организаций" },
+  { abbr: "ПРСГО", full: "Правила Руководящего Состава Государственных Организаций" },
+  { abbr: "ОУМЗ",  full: "Общий Устав Министерства Здравоохранения" },
+  { abbr: "ВУ",    full: "Внутренний Устав" },
+  { abbr: "ГСзФ",  full: "Главный Следящий за Фракциями" },
+  { abbr: "ЗГСзФ", full: "Заместитель Главного Следящего за Фракциями" },
+  { abbr: "ГС",    full: "Главный Следящий" },
+  { abbr: "ПГС",   full: "Помощник Главного Следящего" },
+  { abbr: "ГВ",    full: "Главный Врач" },
+  { abbr: "ПЗГВ",  full: "Первый Заместитель Главного Врача" },
+  { abbr: "ЗГВ",   full: "Заместитель Главного Врача" },
+  { abbr: "ЗО",    full: "Заведующий Отделением" },
+  { abbr: "ЗЗО",   full: "Заместитель Заведующего Отделения" },
+  { abbr: "ВрИО",  full: "Временно Исполняющий Обязанности" },
+  { abbr: "ИО",    full: "Исполняющий Обязанности" },
+  { abbr: "РС",    full: "Руководящий Состав" },
+  { abbr: "МС",    full: "Младший Состав" },
+  { abbr: "ОДС",   full: "Отделение Дневного Стационара" },
+  { abbr: "ОИК",   full: "Отделение Инфекционного Контроля" },
+  { abbr: "СОП",   full: "Стоматологическое Отделение Поликлиники" },
+  { abbr: "ОПРС",  full: "Отделение Подготовки Руководящего Состава" },
+  { abbr: "ОИ",    full: "Отделение Интернатуры" },
+  { abbr: "АСМП",  full: "Автомобиль Скорой Медицинской Помощи" },
+  { abbr: "ВСМП",  full: "Вертолёт Скорой Медицинской Помощи" },
+  { abbr: "РАСМП", full: "Реанимационный Автомобиль Скорой Медицинской Помощи" },
+  { abbr: "ЖА",    full: "Журнал Активности" },
+  { abbr: "МП",    full: "Мероприятие" },
+  { abbr: "ПСЖ",   full: "По Собственному Желанию" },
+  { abbr: "УП",    full: "Уважительная Причина" },
+  { abbr: "ТКМ",   full: "Травматолого-ортопедический Центр г. Мирный" },
+  { abbr: "КМН",   full: "Кандидат Медицинских Наук" },
+  { abbr: "ДМН",   full: "Доктор Медицинских Наук" },
+];
+export const defaultRadioCommands: RadioCommand[] = [
+  { cmd: "/r",   desc: "Команда РП рации" },
+  { cmd: "/rb",  desc: "Команда нонРП рации" },
+  { cmd: "/ro",  desc: "Команда РП рации (между больницами)" },
+  { cmd: "/rob", desc: "Команда нонРП рации (между больницами)" },
+];
+export const defaultRadioRules: RadioRule[] = [
+  { text: "Отыгровка: Перед тем, как сказать что-то в рацию, нужно обязательно отыграть то, что Вы её достали, а после доклада — то, что убрали." },
+  { text: "В /r: Сейчас в РП рацию Вам можно использовать только для докладов: о заступлении на смену, сдаче смены. Пример: ОИ-КД. Заступил на смену." },
+  { text: "В /rb: Вся остальная информация (вопросы, общение) — только в /rb." },
+  { text: "Для интернов: Сейчас рация Вам доступна только для докладов о заступлении на смену и об её сдаче." },
+];
+export const defaultActivityData = {
+  ja_link: "https://status-journal.com/dashboard",
+  app_link: "https://github.com/HM-Province/gta-journal",
+  forum_link: "https://forum.gtaprovince.ru/topic/995733-cgb-g-nevskiy-informacionnyy-razdel/?do=findComment&comment=6982173",
+  afk_rules: [
+    "Вставать в АФК разрешено где угодно в пределах больницы (Исключение: крыша больницы).",
+    "Длительность АФК — не более 5-ти минут!",
+    "Вставать в АФК при онлайне 600 человек и больше — запрещено!",
+  ],
+};
+export const defaultIntroData = {
+  welcome: "Добро пожаловать в ЦГБ города Невский!",
+  line1: "С этого момента Вы являетесь сотрудником Отделения Интернатуры.",
+  days_total: "14",
+  days_feldsher: "7",
+};
+export const defaultInternExam = {
+  title: "Твоя первая и главная задача: Получить допуск к лечению.",
+  desc: "До получения допуска к лечению вам нельзя абсолютно ничего. Лечить пациентов сможете только тогда, когда получите допуск к лечению.",
+  binds_link: "https://forum.gtaprovince.ru/topic/995732-cgb-g-nevskiy-bindy-dlya-sotrudnikov/",
+  charter_link: "https://forum.gtaprovince.ru/topic/995741-cgb-g-nevskiy-vnutrenniy-ustav/",
+  exam_items: [
+    "Информацию о больнице, которую Вам расскажут в процессе обучения;",
+    "Практический экзамен по выдаче препаратов пациентам;",
+    "Вопросы по Внутреннему уставу нашей больницы.",
+  ],
 };

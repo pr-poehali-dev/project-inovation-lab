@@ -4,6 +4,7 @@ import { SaveBtn, Field, Inp, SectionHeader } from "./adminHelpers";
 import {
   BADGE_COLORS, DEPT_COLORS,
   HeroData, Section, StaffMember, Command, Floor, Department, CharterDoc, Report,
+  AbbrItem, RadioCommand, RadioRule,
 } from "./adminTypes";
 
 type Schedule = {
@@ -51,6 +52,19 @@ interface Props {
   setMaleReports: React.Dispatch<React.SetStateAction<Report[]>>;
   femaleReports: Report[];
   setFemaleReports: React.Dispatch<React.SetStateAction<Report[]>>;
+
+  abbr: AbbrItem[];
+  setAbbr: React.Dispatch<React.SetStateAction<AbbrItem[]>>;
+  radioCommands: RadioCommand[];
+  setRadioCommands: React.Dispatch<React.SetStateAction<RadioCommand[]>>;
+  radioRules: RadioRule[];
+  setRadioRules: React.Dispatch<React.SetStateAction<RadioRule[]>>;
+  activityData: { ja_link: string; app_link: string; forum_link: string; afk_rules: string[] };
+  setActivityData: React.Dispatch<React.SetStateAction<{ ja_link: string; app_link: string; forum_link: string; afk_rules: string[] }>>;
+  introData: { welcome: string; line1: string; days_total: string; days_feldsher: string };
+  setIntroData: React.Dispatch<React.SetStateAction<{ welcome: string; line1: string; days_total: string; days_feldsher: string }>>;
+  internExam: { title: string; desc: string; binds_link: string; charter_link: string; exam_items: string[] };
+  setInternExam: React.Dispatch<React.SetStateAction<{ title: string; desc: string; binds_link: string; charter_link: string; exam_items: string[] }>>;
 }
 
 export default function AdminSiteContent({
@@ -66,6 +80,12 @@ export default function AdminSiteContent({
   oathLines, setOathLines,
   maleReports, setMaleReports,
   femaleReports, setFemaleReports,
+  abbr, setAbbr,
+  radioCommands, setRadioCommands,
+  radioRules, setRadioRules,
+  activityData, setActivityData,
+  introData, setIntroData,
+  internExam, setInternExam,
 }: Props) {
   return (
     <>
@@ -366,6 +386,189 @@ export default function AdminSiteContent({
               <div className="mt-3"><SaveBtn onClick={() => saveBlock(key, items)} saved={saved} loading={saving} /></div>
             </div>
           ))}
+        </div>
+      )}
+      {/* ── ABBR ───────────────────────────────────────────────────────── */}
+      {tab === "abbr" && (
+        <div className="max-w-2xl">
+          <div className="flex items-center justify-between mb-6">
+            <SectionHeader title="Аббревиатуры" desc="Список сокращений и расшифровок" />
+            <button onClick={() => { playClickSound(); setAbbr(a => [...a, { abbr: "АБВ", full: "Расшифровка" }]); }}
+              className="flex items-center gap-2 border border-zinc-700 hover:border-red-600 text-zinc-300 hover:text-white px-3 py-2 text-xs uppercase tracking-wider transition-colors shrink-0">
+              <Icon name="Plus" size={13} />Добавить
+            </button>
+          </div>
+          <div className="flex flex-col gap-2">
+            {abbr.map((item, idx) => (
+              <div key={idx} className="flex items-center gap-2 group">
+                <input value={item.abbr} onChange={e => setAbbr(a => a.map((x, i) => i === idx ? { ...x, abbr: e.target.value } : x))}
+                  className="bg-zinc-900 border border-zinc-700 text-white px-3 py-2 text-xs font-bold outline-none focus:border-red-600 transition-colors w-24 shrink-0" />
+                <input value={item.full} onChange={e => setAbbr(a => a.map((x, i) => i === idx ? { ...x, full: e.target.value } : x))}
+                  className="flex-1 bg-zinc-900 border border-zinc-700 text-white px-3 py-2 text-sm outline-none focus:border-red-600 transition-colors" />
+                <button onClick={() => { playClickSound(); setAbbr(a => a.filter((_, i) => i !== idx)); }}
+                  className="text-zinc-600 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 shrink-0"><Icon name="X" size={14} /></button>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6"><SaveBtn onClick={() => saveBlock("abbr", abbr)} saved={saved} loading={saving} /></div>
+        </div>
+      )}
+
+      {/* ── RADIO ──────────────────────────────────────────────────────── */}
+      {tab === "radio" && (
+        <div className="max-w-2xl">
+          <SectionHeader title="Использование рации" desc="Команды рации и правила использования" />
+
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-semibold text-zinc-300">Команды рации</p>
+              <button onClick={() => { playClickSound(); setRadioCommands(c => [...c, { cmd: "/r", desc: "Описание" }]); }}
+                className="flex items-center gap-1 text-zinc-500 hover:text-white text-xs transition-colors">
+                <Icon name="Plus" size={12} />Добавить
+              </button>
+            </div>
+            <div className="flex flex-col gap-2 border border-zinc-800 p-4">
+              {radioCommands.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-2 group">
+                  <input value={item.cmd} onChange={e => setRadioCommands(c => c.map((x, i) => i === idx ? { ...x, cmd: e.target.value } : x))}
+                    className="bg-zinc-900 border border-zinc-700 text-white px-2 py-2 text-xs font-mono outline-none focus:border-red-600 transition-colors w-24 shrink-0" />
+                  <input value={item.desc} onChange={e => setRadioCommands(c => c.map((x, i) => i === idx ? { ...x, desc: e.target.value } : x))}
+                    className="flex-1 bg-zinc-900 border border-zinc-700 text-white px-2 py-2 text-sm outline-none focus:border-red-600 transition-colors" />
+                  <button onClick={() => { playClickSound(); setRadioCommands(c => c.filter((_, i) => i !== idx)); }}
+                    className="text-zinc-600 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 shrink-0"><Icon name="X" size={13} /></button>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3"><SaveBtn onClick={() => saveBlock("radio_commands", radioCommands)} saved={saved} loading={saving} /></div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-semibold text-zinc-300">Правила использования</p>
+              <button onClick={() => { playClickSound(); setRadioRules(r => [...r, { text: "Новое правило" }]); }}
+                className="flex items-center gap-1 text-zinc-500 hover:text-white text-xs transition-colors">
+                <Icon name="Plus" size={12} />Добавить
+              </button>
+            </div>
+            <div className="flex flex-col gap-2 border border-zinc-800 p-4">
+              {radioRules.map((item, idx) => (
+                <div key={idx} className="flex items-start gap-2 group">
+                  <span className="text-zinc-500 text-xs shrink-0 pt-2.5">{idx + 1}.</span>
+                  <textarea value={item.text} onChange={e => setRadioRules(r => r.map((x, i) => i === idx ? { ...x, text: e.target.value } : x))}
+                    rows={2}
+                    className="flex-1 bg-zinc-900 border border-zinc-700 text-white px-2 py-2 text-sm outline-none focus:border-red-600 transition-colors resize-none" />
+                  <button onClick={() => { playClickSound(); setRadioRules(r => r.filter((_, i) => i !== idx)); }}
+                    className="text-zinc-600 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 shrink-0 mt-2"><Icon name="X" size={13} /></button>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3"><SaveBtn onClick={() => saveBlock("radio_rules", radioRules)} saved={saved} loading={saving} /></div>
+          </div>
+        </div>
+      )}
+
+      {/* ── ACTIVITY ───────────────────────────────────────────────────── */}
+      {tab === "activity" && (
+        <div className="max-w-2xl">
+          <SectionHeader title="Журнал активности (ЖА)" desc="Правила АФК и ссылки на ресурсы" />
+          <div className="flex flex-col gap-4 mb-6">
+            <Field label="Ссылка на сайт ЖА">
+              <Inp value={activityData.ja_link} onChange={v => setActivityData(d => ({ ...d, ja_link: v }))} />
+            </Field>
+            <Field label="Ссылка на приложение ЖА">
+              <Inp value={activityData.app_link} onChange={v => setActivityData(d => ({ ...d, app_link: v }))} />
+            </Field>
+            <Field label="Ссылка на госпортал">
+              <Inp value={activityData.forum_link} onChange={v => setActivityData(d => ({ ...d, forum_link: v }))} />
+            </Field>
+          </div>
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-semibold text-zinc-300">Правила АФК</p>
+              <button onClick={() => { playClickSound(); setActivityData(d => ({ ...d, afk_rules: [...d.afk_rules, "Новое правило"] })); }}
+                className="flex items-center gap-1 text-zinc-500 hover:text-white text-xs transition-colors">
+                <Icon name="Plus" size={12} />Добавить
+              </button>
+            </div>
+            <div className="flex flex-col gap-2">
+              {activityData.afk_rules.map((rule, idx) => (
+                <div key={idx} className="flex items-center gap-2 group">
+                  <input value={rule} onChange={e => setActivityData(d => ({ ...d, afk_rules: d.afk_rules.map((r, i) => i === idx ? e.target.value : r) }))}
+                    className="flex-1 bg-zinc-900 border border-zinc-700 text-white px-3 py-2 text-sm outline-none focus:border-red-600 transition-colors" />
+                  <button onClick={() => { playClickSound(); setActivityData(d => ({ ...d, afk_rules: d.afk_rules.filter((_, i) => i !== idx) })); }}
+                    className="text-zinc-600 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 shrink-0"><Icon name="X" size={14} /></button>
+                </div>
+              ))}
+            </div>
+          </div>
+          <SaveBtn onClick={() => saveBlock("activity", activityData)} saved={saved} loading={saving} />
+        </div>
+      )}
+
+      {/* ── INTRO ──────────────────────────────────────────────────────── */}
+      {tab === "intro" && (
+        <div className="max-w-2xl">
+          <SectionHeader title="Вступление" desc="Текст приветствия при входе в раздел обучения" />
+          <div className="flex flex-col gap-4">
+            <Field label="Заголовок-приветствие">
+              <Inp value={introData.welcome} onChange={v => setIntroData(d => ({ ...d, welcome: v }))} />
+            </Field>
+            <Field label="Первое предложение">
+              <textarea rows={2} value={introData.line1} onChange={e => setIntroData(d => ({ ...d, line1: e.target.value }))}
+                className="w-full bg-zinc-900 border border-zinc-700 text-white px-3 py-2.5 text-sm outline-none focus:border-red-600 transition-colors resize-none" />
+            </Field>
+            <div className="grid grid-cols-2 gap-4">
+              <Field label="Дней всего в ОИ">
+                <Inp value={introData.days_total} onChange={v => setIntroData(d => ({ ...d, days_total: v }))} />
+              </Field>
+              <Field label="Дней до Фельдшера">
+                <Inp value={introData.days_feldsher} onChange={v => setIntroData(d => ({ ...d, days_feldsher: v }))} />
+              </Field>
+            </div>
+            <SaveBtn onClick={() => saveBlock("intro_data", introData)} saved={saved} loading={saving} />
+          </div>
+        </div>
+      )}
+
+      {/* ── INTERN EXAM ────────────────────────────────────────────────── */}
+      {tab === "intern_exam" && (
+        <div className="max-w-2xl">
+          <SectionHeader title="Раздел Интерн" desc="Задача и требования для получения допуска к лечению" />
+          <div className="flex flex-col gap-4 mb-6">
+            <Field label="Главная задача (красный заголовок)">
+              <Inp value={internExam.title} onChange={v => setInternExam(d => ({ ...d, title: v }))} />
+            </Field>
+            <Field label="Описание">
+              <textarea rows={3} value={internExam.desc} onChange={e => setInternExam(d => ({ ...d, desc: e.target.value }))}
+                className="w-full bg-zinc-900 border border-zinc-700 text-white px-3 py-2.5 text-sm outline-none focus:border-red-600 transition-colors resize-none" />
+            </Field>
+            <Field label="Ссылка на бинды">
+              <Inp value={internExam.binds_link} onChange={v => setInternExam(d => ({ ...d, binds_link: v }))} />
+            </Field>
+            <Field label="Ссылка на Внутренний Устав">
+              <Inp value={internExam.charter_link} onChange={v => setInternExam(d => ({ ...d, charter_link: v }))} />
+            </Field>
+          </div>
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-semibold text-zinc-300">Пункты ПМЭ</p>
+              <button onClick={() => { playClickSound(); setInternExam(d => ({ ...d, exam_items: [...d.exam_items, "Новый пункт"] })); }}
+                className="flex items-center gap-1 text-zinc-500 hover:text-white text-xs transition-colors">
+                <Icon name="Plus" size={12} />Добавить
+              </button>
+            </div>
+            <div className="flex flex-col gap-2 border border-zinc-800 p-4">
+              {internExam.exam_items.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-2 group">
+                  <input value={item} onChange={e => setInternExam(d => ({ ...d, exam_items: d.exam_items.map((x, i) => i === idx ? e.target.value : x) }))}
+                    className="flex-1 bg-zinc-900 border border-zinc-700 text-white px-3 py-2 text-sm outline-none focus:border-red-600 transition-colors" />
+                  <button onClick={() => { playClickSound(); setInternExam(d => ({ ...d, exam_items: d.exam_items.filter((_, i) => i !== idx) })); }}
+                    className="text-zinc-600 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 shrink-0"><Icon name="X" size={14} /></button>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3"><SaveBtn onClick={() => saveBlock("intern_exam", internExam)} saved={saved} loading={saving} /></div>
+          </div>
         </div>
       )}
     </>
