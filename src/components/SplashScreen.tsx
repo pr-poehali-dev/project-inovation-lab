@@ -111,10 +111,28 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
       (window as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!AC) return;
     const ac = new AC();
-    BEAT_TIMES.forEach(ms => {
-      const peakOffset = BEAT_MS * 0.39 / 1000;
-      playHeartbeat(ac, ac.currentTime + ms / 1000 + peakOffset);
-    });
+
+    const scheduleBeats = () => {
+      BEAT_TIMES.forEach(ms => {
+        const peakOffset = BEAT_MS * 0.39 / 1000;
+        playHeartbeat(ac, ac.currentTime + ms / 1000 + peakOffset);
+      });
+    };
+
+    if (ac.state === "suspended") {
+      const unlock = () => {
+        ac.resume().then(() => {
+          scheduleBeats();
+          document.removeEventListener("touchstart", unlock);
+          document.removeEventListener("click", unlock);
+        });
+      };
+      document.addEventListener("touchstart", unlock, { once: true });
+      document.addEventListener("click", unlock, { once: true });
+    } else {
+      scheduleBeats();
+    }
+
     return () => { ac.close(); };
   }, []);
 
