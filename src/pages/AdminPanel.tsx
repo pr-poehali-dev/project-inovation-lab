@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { playClickSound } from "@/hooks/useSound";
 import Icon from "@/components/ui/icon";
+import { toast } from "sonner";
 
 import {
   Role, Tab, AccessUser,
@@ -92,7 +93,7 @@ export default function AdminPanel() {
     await authFetch(`${API}?action=save_site_data`, { method: "POST", body: JSON.stringify({ key, value }) });
     setSaving(false);
     showSaved();
-    // Сообщаем iframe о том что данные обновились
+    toast.success("Сохранено", { description: "Изменения опубликованы на сайте", duration: 2500 });
     iframeRef.current?.contentWindow?.postMessage("site_data_updated", "*");
   };
 

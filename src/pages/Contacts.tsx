@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import { playClickSound } from "@/hooks/useSound";
 import { useSiteData } from "@/hooks/useSiteData";
@@ -26,13 +27,18 @@ export default function Contacts() {
           На главную
         </button>
 
-        <p className="text-xs uppercase tracking-widest text-red-600 mb-2">ЦГБ Невский</p>
-        <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-10">Руководящий состав ОИ</h1>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+          <p className="text-xs uppercase tracking-widest text-red-600 mb-2">ЦГБ Невский</p>
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-10">Руководящий состав ОИ</h1>
+        </motion.div>
 
         <div className="flex flex-col gap-4">
-          {staff.map((person) => (
-            <a
+          {staff.map((person, i) => (
+            <motion.a
               key={person.nickname}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: i * 0.08 }}
               href={person.href}
               target="_blank"
               rel="noopener noreferrer"
@@ -56,7 +62,7 @@ export default function Contacts() {
                   </span>
                 </div>
               </div>
-            </a>
+            </motion.a>
           ))}
         </div>
       </div>
