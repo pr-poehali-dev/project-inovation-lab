@@ -13,11 +13,21 @@
       "expectedStatus": 401
     },
     {
-      "name": "vk_url returns url",
-      "method": "GET",
-      "path": "/?action=vk_url&redirect_uri=https://example.com&state=test",
+      "name": "login with unknown nickname returns 403",
+      "method": "POST",
+      "path": "/?action=login",
+      "body": {"nickname": "unknown_user_xyz"},
+      "expectedStatus": 403,
+      "expectedBody": {"error": "denied"},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "login with super admin returns token",
+      "method": "POST",
+      "path": "/?action=login",
+      "body": {"nickname": "soul__shu"},
       "expectedStatus": 200,
-      "expectedBody": {"url": "string"},
+      "expectedBody": {"role": "super_admin"},
       "bodyMatcher": "partial"
     }
   ]

@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { playClickSound } from "@/hooks/useSound";
 import Icon from "@/components/ui/icon";
@@ -6,12 +7,11 @@ import Icon from "@/components/ui/icon";
 const API = "https://functions.poehali.dev/ee0c9d49-3da0-4e2e-a2ab-1f68f29a1405";
 
 type Role = "super_admin" | "editor";
-type Tab = "hero" | "staff" | "sections" | "users";
+type Tab = "hero" | "staff" | "sections";
 
 type Section = { id: string; title: string; items: string[] };
 type StaffMember = { role: string; name: string; nickname: string; href: string; badge: string; badgeColor: string };
 type HeroData = { subtitle: string; buttonText: string };
-type AdminUser = { id: number; vk_id: string; vk_name: string; vk_avatar: string; role: Role; approved: boolean; created_at: string };
 
 const defaultSections: Section[] = [
   { id: "intern", title: "Интерн", items: ["Ознакомление с правилами внутреннего распорядка", "Изучение структуры отделения", "Работа с медицинской документацией"] },
@@ -50,7 +50,7 @@ function Input({ value, onChange, placeholder, className = "" }: { value: string
 
 export default function AdminPanel() {
   const navigate = useNavigate();
-  const [me, setMe] = useState<{ vk_name: string; vk_avatar: string; role: Role } | null>(null);
+  const [me, setMe] = useState<{ nickname: string; role: Role } | null>(null);
   const [tab, setTab] = useState<Tab>("hero");
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -58,8 +58,6 @@ export default function AdminPanel() {
   const [hero, setHero] = useState<HeroData>(defaultHero);
   const [sections, setSections] = useState<Section[]>(defaultSections);
   const [staff, setStaff] = useState<StaffMember[]>(defaultStaff);
-  const [users, setUsers] = useState<AdminUser[]>([]);
-  const [usersLoading, setUsersLoading] = useState(false);
 
   const [newItem, setNewItem] = useState<Record<string, string>>({});
   const [editStaffIdx, setEditStaffIdx] = useState<number | null>(null);
@@ -79,7 +77,7 @@ export default function AdminPanel() {
     authFetch(`${API}?action=me`)
       .then(r => r.json())
       .then(d => {
-        if (d.vk_name) setMe({ vk_name: d.vk_name, vk_avatar: d.vk_avatar, role: d.role });
+        if (d.nickname) setMe({ nickname: d.nickname, role: d.role });
         else navigate("/admin/login");
       })
       .catch(() => navigate("/admin/login"));
@@ -99,18 +97,6 @@ export default function AdminPanel() {
       });
   }, [me, authFetch]);
 
-  // ── Load users (super_admin only) ─────────────────────────────────────────
-  const loadUsers = useCallback(() => {
-    if (!me || me.role !== "super_admin") return;
-    setUsersLoading(true);
-    authFetch(`${API}?action=users`)
-      .then(r => r.json())
-      .then(d => { if (d.users) setUsers(d.users); })
-      .finally(() => setUsersLoading(false));
-  }, [me, authFetch]);
-
-  useEffect(() => { if (tab === "users") loadUsers(); }, [tab, loadUsers]);
-
   const saveBlock = async (key: string, value: unknown) => {
     setSaving(true);
     await authFetch(`${API}?action=save_site_data`, {
@@ -127,21 +113,10 @@ export default function AdminPanel() {
     navigate("/admin/login");
   };
 
-  const approveUser = async (vk_id: string, role: Role) => {
-    await authFetch(`${API}?action=approve`, { method: "POST", body: JSON.stringify({ vk_id, role }) });
-    loadUsers();
-  };
-
-  const rejectUser = async (vk_id: string) => {
-    await authFetch(`${API}?action=reject`, { method: "POST", body: JSON.stringify({ vk_id }) });
-    loadUsers();
-  };
-
-  const TABS: { id: Tab; label: string; icon: string; superOnly?: boolean }[] = [
+  const TABS: { id: Tab; label: string; icon: string }[] = [
     { id: "hero", label: "Главная", icon: "Home" },
     { id: "staff", label: "Состав", icon: "Users" },
     { id: "sections", label: "Обучение", icon: "BookOpen" },
-    { id: "users", label: "Доступ", icon: "Shield", superOnly: true },
   ];
 
   if (!me) {
@@ -163,9 +138,11 @@ export default function AdminPanel() {
         </div>
         <div className="flex items-center gap-3 md:gap-4">
           <div className="flex items-center gap-2">
-            {me.vk_avatar && <img src={me.vk_avatar} alt="" className="w-7 h-7 rounded-full object-cover" />}
+            <div className="w-7 h-7 bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0">
+              <Icon name="User" size={13} className="text-zinc-400" />
+            </div>
             <div className="hidden md:block">
-              <p className="text-sm font-medium leading-none">{me.vk_name}</p>
+              <p className="text-sm font-medium leading-none">vk.ru/{me.nickname}</p>
               <p className="text-xs text-zinc-500 mt-0.5">{me.role === "super_admin" ? "Главный администратор" : "Редактор"}</p>
             </div>
           </div>
@@ -184,7 +161,7 @@ export default function AdminPanel() {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside className="w-14 md:w-52 border-r border-zinc-800 flex flex-col py-4 shrink-0">
-          {TABS.filter(t => !t.superOnly || me.role === "super_admin").map(t => (
+          {TABS.map(t => (
             <button key={t.id} onClick={() => { playClickSound(); setTab(t.id); }}
               className={`flex items-center gap-3 px-4 py-3 text-sm transition-colors text-left ${tab === t.id ? "bg-zinc-800 text-white border-r-2 border-red-600" : "text-zinc-400 hover:text-white hover:bg-zinc-900"}`}>
               <Icon name={t.icon as "Home"} size={16} className="shrink-0" />
@@ -362,64 +339,6 @@ export default function AdminPanel() {
               <div className="mt-6">
                 <SaveBtn onClick={() => saveBlock("sections", sections)} saved={saved} loading={saving} />
               </div>
-            </div>
-          )}
-
-          {/* ── USERS TAB (super_admin only) ──────────────────────────────── */}
-          {tab === "users" && me.role === "super_admin" && (
-            <div className="max-w-2xl">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-lg font-bold mb-1">Управление доступом</h2>
-                  <p className="text-zinc-500 text-sm">Одобрите или отклоните заявки на доступ</p>
-                </div>
-                <button onClick={() => { playClickSound(); loadUsers(); }}
-                  className="text-zinc-400 hover:text-white transition-colors">
-                  <Icon name="RefreshCw" size={15} />
-                </button>
-              </div>
-
-              {usersLoading ? (
-                <div className="flex items-center justify-center py-16">
-                  <div className="w-6 h-6 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
-                </div>
-              ) : (
-                <div className="flex flex-col gap-3">
-                  {users.length === 0 && (
-                    <p className="text-zinc-500 text-sm text-center py-10">Нет пользователей</p>
-                  )}
-                  {users.map(u => (
-                    <div key={u.vk_id} className={`border p-4 flex items-center gap-4 ${u.approved ? "border-zinc-800" : "border-yellow-800/50 bg-yellow-950/10"}`}>
-                      {u.vk_avatar && <img src={u.vk_avatar} alt="" className="w-10 h-10 rounded-full object-cover shrink-0" />}
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-sm truncate">{u.vk_name}</p>
-                        <p className="text-xs text-zinc-500">
-                          {u.role === "super_admin" ? "Главный администратор" : "Редактор"} ·{" "}
-                          {u.approved ? <span className="text-green-400">Одобрен</span> : <span className="text-yellow-400">Ожидает</span>}
-                        </p>
-                      </div>
-                      {!u.approved && (
-                        <div className="flex gap-2 shrink-0">
-                          <button onClick={() => { playClickSound(); approveUser(u.vk_id, "editor"); }}
-                            className="bg-green-700 hover:bg-green-600 text-white px-3 py-1.5 text-xs font-medium transition-colors">
-                            Одобрить
-                          </button>
-                          <button onClick={() => { playClickSound(); rejectUser(u.vk_id); }}
-                            className="bg-zinc-800 hover:bg-red-900 text-zinc-300 hover:text-white px-3 py-1.5 text-xs font-medium transition-colors">
-                            Отклонить
-                          </button>
-                        </div>
-                      )}
-                      {u.approved && u.role !== "super_admin" && (
-                        <button onClick={() => { playClickSound(); rejectUser(u.vk_id); }}
-                          className="text-zinc-600 hover:text-red-500 transition-colors shrink-0">
-                          <Icon name="UserX" size={15} />
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           )}
 
