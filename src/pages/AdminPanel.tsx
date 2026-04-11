@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { playClickSound } from "@/hooks/useSound";
 import Icon from "@/components/ui/icon";
@@ -43,6 +43,9 @@ export default function AdminPanel() {
   const [tab, setTab] = useState<Tab>(localStorage.getItem("admin_role") === "editor" ? "sections" : "hero");
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewPage, setPreviewPage] = useState("/");
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   // Site content state
   const [hero, setHero] = useState<HeroData>(defaultHero);
@@ -88,6 +91,17 @@ export default function AdminPanel() {
     await authFetch(`${API}?action=save_site_data`, { method: "POST", body: JSON.stringify({ key, value }) });
     setSaving(false);
     showSaved();
+    // Сообщаем iframe о том что данные обновились
+    iframeRef.current?.contentWindow?.postMessage("site_data_updated", "*");
+  };
+
+  // Выбор страницы превью по вкладке
+  const getPreviewPage = (t: Tab): string => {
+    if (t === "hero" || t === "staff") return "/";
+    if (t === "sections" || t === "intro" || t === "intern_exam" || t === "commands" ||
+        t === "radio" || t === "reports" || t === "abbr" || t === "schedule" ||
+        t === "floors" || t === "activity" || t === "departments" || t === "charter" || t === "oath") return "/learn";
+    return "/";
   };
 
   useEffect(() => {
@@ -136,6 +150,12 @@ export default function AdminPanel() {
   const isSuperAdmin = me?.role === "super_admin";
   const TABS = ALL_TABS.filter(t => !t.superOnly || isSuperAdmin);
 
+  const handleTabChange = (t: Tab) => {
+    playClickSound();
+    setTab(t);
+    setPreviewPage(getPreviewPage(t));
+  };
+
   if (!me) {
     return (
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
@@ -154,6 +174,14 @@ export default function AdminPanel() {
           <span className="text-sm font-semibold">Панель управления</span>
         </div>
         <div className="flex items-center gap-3 md:gap-4">
+          {/* Кнопка превью */}
+          <button
+            onClick={() => { playClickSound(); setShowPreview(v => !v); }}
+            className={`flex items-center gap-1.5 text-xs px-3 py-1.5 border transition-colors ${showPreview ? "border-red-600 text-red-400 bg-red-600/10" : "border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500"}`}
+          >
+            <Icon name={showPreview ? "EyeOff" : "Eye"} size={13} />
+            <span className="hidden sm:inline">{showPreview ? "Скрыть превью" : "Превью сайта"}</span>
+          </button>
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0">
               <Icon name="User" size={13} className="text-zinc-400" />
@@ -174,7 +202,7 @@ export default function AdminPanel() {
         {/* Sidebar */}
         <aside className="w-14 md:w-52 border-r border-zinc-800 flex flex-col py-2 shrink-0 overflow-y-auto">
           {TABS.map(t => (
-            <button key={t.id} onClick={() => { playClickSound(); setTab(t.id); }}
+            <button key={t.id} onClick={() => handleTabChange(t.id)}
               className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors text-left ${tab === t.id ? "bg-zinc-800 text-white border-r-2 border-red-600" : "text-zinc-400 hover:text-white hover:bg-zinc-900"}`}>
               <Icon name={t.icon as "Home"} size={15} className="shrink-0" />
               <span className="hidden md:block text-sm">{t.label}</span>
@@ -183,7 +211,7 @@ export default function AdminPanel() {
         </aside>
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto p-5 md:p-8">
+        <main className={`overflow-y-auto p-5 md:p-8 ${showPreview ? "w-[420px] shrink-0" : "flex-1"}`}>
           <AdminSiteContent
             tab={tab}
             saved={saved}
@@ -226,6 +254,49 @@ export default function AdminPanel() {
             pwLoading={pwLoading} setPwLoading={setPwLoading}
           />
         </main>
+
+        {/* Live Preview iframe */}
+        {showPreview && (
+          <div className="flex-1 flex flex-col border-l border-zinc-800 bg-zinc-900 min-w-0">
+            {/* Preview топбар */}
+            <div className="flex items-center gap-2 px-3 py-2 border-b border-zinc-800 shrink-0">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-red-500/60" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
+                <div className="w-3 h-3 rounded-full bg-green-500/60" />
+              </div>
+              <div className="flex-1 flex items-center gap-2 bg-zinc-800 rounded px-3 py-1 text-xs text-zinc-400 font-mono">
+                <Icon name="Globe" size={11} className="shrink-0" />
+                <span className="truncate">{window.location.origin}{previewPage}</span>
+              </div>
+              <div className="flex gap-1 shrink-0">
+                {["/", "/learn", "/contacts"].map(p => (
+                  <button
+                    key={p}
+                    onClick={() => setPreviewPage(p)}
+                    className={`text-xs px-2 py-1 rounded transition-colors ${previewPage === p ? "bg-red-600 text-white" : "text-zinc-500 hover:text-white"}`}
+                  >
+                    {p === "/" ? "Главная" : p === "/learn" ? "Обучение" : "Контакты"}
+                  </button>
+                ))}
+                <button
+                  onClick={() => { iframeRef.current?.contentWindow?.location.reload(); }}
+                  className="text-zinc-500 hover:text-white transition-colors p-1"
+                  title="Обновить"
+                >
+                  <Icon name="RefreshCw" size={12} />
+                </button>
+              </div>
+            </div>
+            {/* iframe */}
+            <iframe
+              ref={iframeRef}
+              src={previewPage}
+              className="flex-1 w-full bg-white"
+              title="Превью сайта"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
