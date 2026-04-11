@@ -53,7 +53,6 @@ export default function AdminPanel() {
   const [departments, setDepartments] = useState<Department[]>(defaultDepartments);
   const [charter, setCharter] = useState<CharterDoc[]>(defaultCharter);
   const [newItem, setNewItem] = useState<Record<string, string>>({});
-  const [editStaffIdx, setEditStaffIdx] = useState<number | null>(null);
   const [oathLines, setOathLines] = useState<string[]>(defaultOathLines);
   const [maleReports, setMaleReports] = useState<Report[]>(defaultMaleReports);
   const [femaleReports, setFemaleReports] = useState<Report[]>(defaultFemaleReports);
@@ -192,7 +191,6 @@ export default function AdminPanel() {
             saveBlock={saveBlock}
             hero={hero} setHero={setHero}
             staff={staff} setStaff={setStaff}
-            editStaffIdx={editStaffIdx} setEditStaffIdx={setEditStaffIdx}
             sections={sections} setSections={setSections}
             newItem={newItem} setNewItem={setNewItem}
             commands={commands} setCommands={setCommands}

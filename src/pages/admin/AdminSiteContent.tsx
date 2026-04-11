@@ -18,8 +18,6 @@ interface Props {
 
   staff: StaffMember[];
   setStaff: React.Dispatch<React.SetStateAction<StaffMember[]>>;
-  editStaffIdx: number | null;
-  setEditStaffIdx: React.Dispatch<React.SetStateAction<number | null>>;
 
   sections: Section[];
   setSections: React.Dispatch<React.SetStateAction<Section[]>>;
@@ -71,7 +69,6 @@ export default function AdminSiteContent(props: Props) {
         tab={tab} saved={saved} saving={saving} saveBlock={saveBlock}
         hero={props.hero} setHero={props.setHero}
         staff={props.staff} setStaff={props.setStaff}
-        editStaffIdx={props.editStaffIdx} setEditStaffIdx={props.setEditStaffIdx}
         introData={props.introData} setIntroData={props.setIntroData}
         internExam={props.internExam} setInternExam={props.setInternExam}
       />
