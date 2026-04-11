@@ -47,11 +47,19 @@ export default function LearnEvidenceSection({ go }: LearnEvidenceSectionProps) 
             </li>
           ))}
         </ul>
+        <div className="flex items-start gap-3 bg-orange-500/10 border border-orange-500/40 px-4 py-3">
+          <Icon name="TriangleAlert" size={16} className="text-orange-400 shrink-0 mt-0.5" />
+          <p className="text-sm text-orange-300 leading-relaxed">
+            <span className="font-bold">ВАЖНО:</span> Фиксируйте лечение с уведомлением «Пациент согласился на лечение» и чтобы было видно дата и время над HUD'ом (либо использованный{" "}
+            <code className="bg-secondary border border-border rounded px-1.5 py-0.5 text-xs font-mono text-foreground">/timestamp</code>
+            ) при прощании с пациентом.
+          </p>
+        </div>
         <p className="text-base text-foreground leading-relaxed">
           Для примера, возьмите этот скриншот №1:
         </p>
         <img
-          src="https://1.downloader.disk.yandex.ru/preview/c849680e3587280c73ce0ef309c220afbadbb78026fe579aabdd4f4be51a1229/inf/di__oJU_tWGHC7fNKXbU7-e-7RAw1ehgr6VjW7YAUHilOEgx2XWCqkTVSnv2AMKQjRL6lzdcSPpYYx4h-Gt3LA%3D%3D?uid=1362692802&filename=mta-screen_2026-03-23_14-12-56.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=1362692802&tknv=v3&size=1920x960"
+          src="https://sun9-10.userapi.com/s/v1/ig2/BfVbLIn-bhKJkPnmmmEk850nAyKXThCRgmq0xhHuZ3TqCTQBEJVXxor9tlbszzKeZZt8T9DYwaEJA-gFhR8OFUMi.jpg?quality=95&as=32x18,48x27,72x40,108x61,160x90,240x135,360x202,480x270,540x304,640x360,720x405,1080x607,1280x720&from=bu&u=2TJ_uumXIjuS2EWJ_SCZvv3vZVQQvdAlJvRm_vbDIhU&cs=1280x0"
           alt="Скриншот №1"
           className="w-full rounded-sm border border-border"
         />
