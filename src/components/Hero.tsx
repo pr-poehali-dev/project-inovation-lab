@@ -2,19 +2,15 @@ import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { playClickSound } from "@/hooks/useSound";
+import { useSiteData } from "@/hooks/useSiteData";
 
-const HERO_KEY = "admin_hero";
 const defaultHero = {
   subtitle: "Методическое пособие для сотрудников отделения. Всё, что нужно знать с первого дня службы.",
   buttonText: "Перейти к обучению",
 };
 
 export default function Hero() {
-  const heroData = (() => {
-    try { return JSON.parse(localStorage.getItem(HERO_KEY) || "null") || defaultHero; }
-    catch { return defaultHero; }
-  })();
-
+  const heroData = useSiteData("hero", defaultHero);
   const container = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { scrollYProgress } = useScroll({
