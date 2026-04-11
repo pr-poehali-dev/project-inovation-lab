@@ -1,11 +1,22 @@
 import Icon from "@/components/ui/icon";
 import { SectionId } from "./learnConfig";
+import { useSiteData } from "@/hooks/useSiteData";
 
 interface LearnScheduleSectionProps {
   go: (id: SectionId) => void;
 }
 
+const defaultSchedule = {
+  weekdays: "с 10:00 до 19:00",
+  saturday: "с 11:00 до 18:00",
+  break: "с 14:00 до 15:00",
+  sunday: "выходной для сотрудников без наказаний",
+  note: "Сотрудники с наказаниями работают в воскресенье по субботнему графику.",
+};
+
 export default function LearnScheduleSection({ go }: LearnScheduleSectionProps) {
+  const schedule = useSiteData("schedule", defaultSchedule);
+
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -25,18 +36,18 @@ export default function LearnScheduleSection({ go }: LearnScheduleSectionProps) 
       <div className="flex flex-col gap-3">
         <p className="text-base text-foreground leading-relaxed">
           С понедельника по пятницу:{" "}
-          <span className="text-red-500 font-medium">с 10:00 до 19:00</span>.
+          <span className="text-red-500 font-medium">{schedule.weekdays}</span>.
         </p>
         <p className="text-base text-foreground leading-relaxed">
           В субботу:{" "}
-          <span className="text-red-500 font-medium">с 11:00 до 18:00</span>.
+          <span className="text-red-500 font-medium">{schedule.saturday}</span>.
         </p>
         <p className="text-base text-foreground leading-relaxed">
           Перерыв ежедневно:{" "}
-          <span className="text-red-500 font-medium">с 14:00 до 15:00</span>.
+          <span className="text-red-500 font-medium">{schedule.break}</span>.
         </p>
         <p className="text-base text-foreground leading-relaxed">
-          Воскресенье: выходной для сотрудников без наказаний.
+          Воскресенье: {schedule.sunday}.
         </p>
       </div>
 
@@ -49,9 +60,7 @@ export default function LearnScheduleSection({ go }: LearnScheduleSectionProps) 
             Время указано московское!
           </p>
           <p className="text-sm text-foreground leading-relaxed">
-            Сотрудники с наказаниями работают в{" "}
-            <span className="font-bold underline">воскресенье по субботнему графику</span>.{" "}
-            Отсутствие таковых на рабочем месте расценивается как прогул смены.
+            {schedule.note}
           </p>
           <p className="text-sm text-foreground leading-relaxed">
             Отсутствие сотрудника на рабочем месте без уважительной причины (перерыва, отпуска или отгула) в рабочее время автоматически расценивается как прогул смены.

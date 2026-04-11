@@ -1,11 +1,12 @@
 import Icon from "@/components/ui/icon";
 import { SectionId } from "./learnConfig";
+import { useSiteData } from "@/hooks/useSiteData";
 
 interface LearnFloorsSectionProps {
   go: (id: SectionId) => void;
 }
 
-const FLOORS = [
+const DEFAULT_FLOORS = [
   { num: "1 этаж", desc: "лечение пациентов (только выписывание препарата в палатах с койками данного этажа);" },
   { num: "2 этаж", desc: "проведение процедур и операций;" },
   { num: "3 этаж", desc: "выдача мед.карт, проведение мед. комиссий (для 5+ рангов);" },
@@ -14,6 +15,7 @@ const FLOORS = [
 ];
 
 export default function LearnFloorsSection({ go }: LearnFloorsSectionProps) {
+  const FLOORS = useSiteData("floors", DEFAULT_FLOORS);
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -35,7 +37,7 @@ export default function LearnFloorsSection({ go }: LearnFloorsSectionProps) {
       </p>
 
       <ul className="flex flex-col gap-3">
-        {FLOORS.map(({ num, desc, noHighlight }) => (
+        {FLOORS.map(({ num, desc }) => (
           <li key={num} className="flex items-start gap-2 text-base text-foreground leading-relaxed">
             <span className="shrink-0 mt-0.5">–</span>
             <span>

@@ -1,54 +1,34 @@
 import Icon from "@/components/ui/icon";
 import { SectionId } from "./learnConfig";
+import { useSiteData } from "@/hooks/useSiteData";
 
 interface LearnDepartmentsSectionProps {
   go: (id: SectionId) => void;
 }
 
-const DEPARTMENTS = [
-  {
-    abbr: "ОИ",
-    name: "Отделение Интернатуры",
-    desc: "это одно из отделений ЦГБ города Невский, сотрудники которого обучаются работе в нашей больнице. Самое первое отделение каждого сотрудника.",
-    border: "border-green-700/50",
-    bg: "bg-green-950/30",
-    text: "text-green-300",
-  },
-  {
-    abbr: "ОДС",
-    name: "Отделение Дневного Стационара",
-    desc: "это одно из отделений ЦГБ города Невский, сотрудники которого занимаются как основной работой больницы, так и оказанием услуг на базе Травматолого-ортопедического центра, проведением проверок аптек и травматологических рейдов для населения и сотрудников государственных организаций.",
-    border: "border-sky-700/50",
-    bg: "bg-sky-950/30",
-    text: "text-sky-300",
-  },
-  {
-    abbr: "ОИК",
-    name: "Отделение Инфекционного Контроля",
-    desc: "это одно из отделений ЦГБ города Невский, сотрудники которого занимаются как основной работой больницы, так и оказанием услуг на базе НИИ Эпидемиологии, проведением санитарных проверок и инфекционных рейдов для населения и сотрудников государственных организаций.",
-    border: "border-red-700/50",
-    bg: "bg-red-950/30",
-    text: "text-red-300",
-  },
-  {
-    abbr: "СОП",
-    name: "Стоматологическое Отделение Поликлиники",
-    desc: 'это одно из отделений ЦГБ города Невский, сотрудники которого занимаются как основной работой больницы, так и оказанием услуг на базе Стоматологической поликлиники "Дентист" и проведением стоматологических рейдов для населения и сотрудников государственных организаций.',
-    border: "border-pink-700/50",
-    bg: "bg-pink-950/30",
-    text: "text-pink-300",
-  },
-  {
-    abbr: "ОПРС",
-    name: "Отделение Подготовки Руководящего Состава",
-    desc: "это одно из отделений ЦГБ города Невский, сотрудники которого проходят курсы повышения квалификации для дальнейшей работы в Руководящем составе больницы.",
-    border: "border-orange-700/50",
-    bg: "bg-orange-950/30",
-    text: "text-orange-300",
-  },
+type Dept = { abbr: string; full: string; color: string };
+
+const COLOR_MAP: Record<string, { border: string; bg: string; text: string }> = {
+  "text-green-400":  { border: "border-green-700/50",  bg: "bg-green-950/30",  text: "text-green-300"  },
+  "text-sky-400":    { border: "border-sky-700/50",    bg: "bg-sky-950/30",    text: "text-sky-300"    },
+  "text-red-400":    { border: "border-red-700/50",    bg: "bg-red-950/30",    text: "text-red-300"    },
+  "text-pink-400":   { border: "border-pink-700/50",   bg: "bg-pink-950/30",   text: "text-pink-300"   },
+  "text-orange-400": { border: "border-orange-700/50", bg: "bg-orange-950/30", text: "text-orange-300" },
+  "text-yellow-400": { border: "border-yellow-700/50", bg: "bg-yellow-950/30", text: "text-yellow-300" },
+  "text-purple-400": { border: "border-purple-700/50", bg: "bg-purple-950/30", text: "text-purple-300" },
+  "text-zinc-400":   { border: "border-zinc-700/50",   bg: "bg-zinc-950/30",   text: "text-zinc-300"   },
+};
+
+const DEFAULT_DEPARTMENTS: Dept[] = [
+  { abbr: "ОИ",   full: "Отделение Интернатуры",                    color: "text-green-400"  },
+  { abbr: "ОДС",  full: "Отделение Дневного Стационара",            color: "text-sky-400"    },
+  { abbr: "ОИК",  full: "Отделение Инфекционного Контроля",         color: "text-red-400"    },
+  { abbr: "СОП",  full: "Стоматологическое Отделение Поликлиники",  color: "text-pink-400"   },
+  { abbr: "ОПРС", full: "Отделение Подготовки Руководящего Состава",color: "text-orange-400" },
 ];
 
 export default function LearnDepartmentsSection({ go }: LearnDepartmentsSectionProps) {
+  const departments = useSiteData<Dept[]>("departments", DEFAULT_DEPARTMENTS);
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -71,18 +51,18 @@ export default function LearnDepartmentsSection({ go }: LearnDepartmentsSectionP
       </p>
 
       <ol className="flex flex-col gap-3">
-        {DEPARTMENTS.map(({ abbr, name, desc, border, bg, text }, idx) => (
-          <li key={abbr} className="flex flex-col gap-1.5">
-            <div className={`border ${border} ${bg} rounded-sm px-4 py-3 flex flex-col gap-1`}>
-              <p className={`text-sm font-bold ${text}`}>
-                {idx + 1}. {name} ({abbr})
-              </p>
-              <p className="text-sm text-foreground leading-relaxed">
-                — {desc}
-              </p>
-            </div>
-          </li>
-        ))}
+        {departments.map((dept, idx) => {
+          const colors = COLOR_MAP[dept.color] || COLOR_MAP["text-zinc-400"];
+          return (
+            <li key={dept.abbr} className="flex flex-col gap-1.5">
+              <div className={`border ${colors.border} ${colors.bg} rounded-sm px-4 py-3 flex flex-col gap-1`}>
+                <p className={`text-sm font-bold ${colors.text}`}>
+                  {idx + 1}. {dept.full} ({dept.abbr})
+                </p>
+              </div>
+            </li>
+          );
+        })}
       </ol>
 
       <p className="text-sm text-muted-foreground">

@@ -1,39 +1,23 @@
 import Icon from "@/components/ui/icon";
 import { SectionId } from "./learnConfig";
+import { useSiteData } from "@/hooks/useSiteData";
 
 interface LearnCharterSectionProps {
   go: (id: SectionId) => void;
 }
 
-const DOCS = [
-  {
-    title: "Общие правила для сотрудников государственных организаций",
-    abbr: "ОПСГО",
-    href: "https://forum.gtaprovince.ru/topic/816638-obschie-pravila-dlya-sotrudnikov-gosudarstvennyh-organizaciy/",
-  },
-  {
-    title: "ФЕДЕРАЛЬНЫЙ ЗАКОН «ОБ ОСНОВАХ ОХРАНЫ ЗДОРОВЬЯ ГРАЖДАН»",
-    abbr: "ФЗоОЗ",
-    href: "https://forum.gtaprovince.ru/topic/724454-federalnyy-zakon-«ob-osnovah-ohrany-zdorovya-grazhdan»-ot-10052023-n-6-fz/",
-  },
-  {
-    title: "Общий устав министерства здравоохранения",
-    abbr: "ОУМЗ",
-    href: "https://forum.gtaprovince.ru/topic/853771-mz-obschiy-ustav-ministerstva-zdravoohraneniya/",
-  },
-  {
-    title: "Внутренний Устав ЦГБ-Н",
-    abbr: "ВУ ЦГБ-Н",
-    href: "https://forum.gtaprovince.ru/topic/995741-cgb-g-nevskiy-vnutrenniy-ustav/",
-  },
-  {
-    title: "Общие правила использования сотрудниками личных транспортных средств",
-    abbr: "ОПиЛТС",
-    href: "https://forum.gtaprovince.ru/topic/816635-obschie-pravila-ispolzovaniya-sotrudnikami-lichnyh-transportnyh-sredstv/",
-  },
+type Doc = { abbr: string; title: string; href: string };
+
+const DEFAULT_DOCS: Doc[] = [
+  { abbr: "ОПСГО",    title: "Общие правила для сотрудников государственных организаций",          href: "https://forum.gtaprovince.ru/topic/816638-obschie-pravila-dlya-sotrudnikov-gosudarstvennyh-organizaciy/" },
+  { abbr: "ФЗоОЗ",    title: "ФЕДЕРАЛЬНЫЙ ЗАКОН «ОБ ОСНОВАХ ОХРАНЫ ЗДОРОВЬЯ ГРАЖДАН»",            href: "https://forum.gtaprovince.ru/topic/724454-federalnyy-zakon-«ob-osnovah-ohrany-zdorovya-grazhdan»-ot-10052023-n-6-fz/" },
+  { abbr: "ОУМЗ",     title: "Общий устав министерства здравоохранения",                           href: "https://forum.gtaprovince.ru/topic/853771-mz-obschiy-ustav-ministerstva-zdravoohraneniya/" },
+  { abbr: "ВУ ЦГБ-Н", title: "Внутренний Устав ЦГБ-Н",                                            href: "https://forum.gtaprovince.ru/topic/995741-cgb-g-nevskiy-vnutrenniy-ustav/" },
+  { abbr: "ОПиЛТС",   title: "Общие правила использования сотрудниками личных транспортных средств", href: "https://forum.gtaprovince.ru/topic/816635-obschie-pravila-ispolzovaniya-sotrudnikami-lichnyh-transportnyh-sredstv/" },
 ];
 
 export default function LearnCharterSection({ go }: LearnCharterSectionProps) {
+  const DOCS = useSiteData<Doc[]>("charter", DEFAULT_DOCS);
   return (
     <div className="flex flex-col gap-6">
       <div>

@@ -1,11 +1,12 @@
 import Icon from "@/components/ui/icon";
 import { SectionId } from "./learnConfig";
+import { useSiteData } from "@/hooks/useSiteData";
 
 interface LearnCommandsSectionProps {
   go: (id: SectionId) => void;
 }
 
-const COMMANDS = [
+const DEFAULT_COMMANDS = [
   { cmd: "/r [Text]",       desc: "RP рация сотрудников ЦГБ." },
   { cmd: "/rb [Text]",      desc: "NonRP чат сотрудников ЦГБ." },
   { cmd: "/ro [Text]",      desc: "Общая RP рация сотрудников МЗ." },
@@ -19,6 +20,7 @@ const COMMANDS = [
 ];
 
 export default function LearnCommandsSection({ go }: LearnCommandsSectionProps) {
+  const COMMANDS = useSiteData("commands", DEFAULT_COMMANDS);
   return (
     <div className="flex flex-col gap-6">
       <div>
