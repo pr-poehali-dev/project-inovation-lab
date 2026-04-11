@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Footer() {
+  const navigate = useNavigate();
   return (
     <div
       className="relative h-[400px] sm:h-[600px] lg:h-[800px] max-h-[800px]"
@@ -18,12 +21,12 @@ export default function Footer() {
                 >
                   Внутренний устав ЦГБ-Н
                 </a>
-                <a
-                  href="#contacts"
-                  className="text-white hover:text-neutral-400 transition-colors duration-300 text-sm sm:text-base"
+                <button
+                  onClick={() => navigate("/contacts")}
+                  className="text-white hover:text-neutral-400 transition-colors duration-300 text-sm sm:text-base text-left"
                 >
                   Руководящий состав ОИ
-                </a>
+                </button>
               </div>
               <div className="flex flex-col gap-1 sm:gap-2">
                 <h3 className="mb-1 sm:mb-2 uppercase text-neutral-400 text-xs sm:text-sm">Обучение</h3>
