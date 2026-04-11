@@ -26,11 +26,36 @@ export default function LearnEvidenceSection({ go }: LearnEvidenceSectionProps) 
         Первым делом, чтобы подать отчет на повышение, давай научимся фиксировать твою работу.
       </p>
 
-      <div className="flex items-start gap-3 bg-orange-500/10 border border-orange-500/40 px-4 py-3">
-        <Icon name="TriangleAlert" size={16} className="text-orange-400 shrink-0 mt-0.5" />
-        <p className="text-sm text-orange-300 leading-relaxed">
-          <span className="font-bold">ВАЖНО:</span> Содержание раздела будет добавлено позже.
+      <div className="flex flex-col gap-3">
+        <p className="text-base text-foreground leading-relaxed">
+          1. Мы всегда фиксируем свою работу, показывая чат, где видно как мы лечим пациента. Важно, чтобы была видна полная картина ситуации, а то есть:
         </p>
+        <ul className="flex flex-col gap-2 ml-4 border-l-2 border-red-600/40 pl-4">
+          {[
+            "Приветствие с Вашим бейджем;",
+            "Вопрос о том, чем Вы можете помочь пациенту;",
+            "Проведение в палату для осмотра;",
+            "Сделанный осмотр;",
+            "Озвучивание диагноза и название препарата от этого диагноза;",
+            "Называть стоимость в 500 рублей для всех препаратов;",
+            "Спрашивание согласия на лечение у пациентов и только после этого передача препарата самому пациенту;",
+            "Прощание «Всего доброго, не болейте!»",
+          ].map((item, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-foreground">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p className="text-base text-foreground leading-relaxed">
+          Для примера, возьмите этот скриншот №1:
+        </p>
+        <img
+          src="https://1.downloader.disk.yandex.ru/preview/c849680e3587280c73ce0ef309c220afbadbb78026fe579aabdd4f4be51a1229/inf/di__oJU_tWGHC7fNKXbU7-e-7RAw1ehgr6VjW7YAUHilOEgx2XWCqkTVSnv2AMKQjRL6lzdcSPpYYx4h-Gt3LA%3D%3D?uid=1362692802&filename=mta-screen_2026-03-23_14-12-56.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=1362692802&tknv=v3&size=1920x960"
+          alt="Скриншот №1"
+          className="w-full rounded-sm border border-border"
+        />
+        <p className="text-xs text-muted-foreground text-center">Скриншот №1: Лечение пациента в палате и захват всего чата.</p>
       </div>
     </div>
   );
