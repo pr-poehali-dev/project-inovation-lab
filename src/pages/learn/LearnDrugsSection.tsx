@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
 import { SectionId } from "./learnConfig";
+import { DRUG_COMPOSITION } from "./drugComposition";
 
 interface LearnDrugsSectionProps {
   go: (id: SectionId) => void;
@@ -84,15 +85,26 @@ const DRUGS: { symptom: string; hint: string; drugs: string[] }[] = [
 ];
 
 export default function LearnDrugsSection({ go }: LearnDrugsSectionProps) {
+  const [tab, setTab] = useState<"symptoms" | "composition">("symptoms");
   const [search, setSearch] = useState("");
+  const [compSearch, setCompSearch] = useState("");
   const [openHints, setOpenHints] = useState<Record<string, boolean>>({});
+  const [openComp, setOpenComp] = useState<Record<string, boolean>>({});
 
   const toggleHint = (symptom: string) =>
     setOpenHints((prev) => ({ ...prev, [symptom]: !prev[symptom] }));
 
+  const toggleComp = (drug: string) =>
+    setOpenComp((prev) => ({ ...prev, [drug]: !prev[drug] }));
+
   const filtered = DRUGS.filter(({ symptom, drugs }) => {
     const q = search.toLowerCase();
     return symptom.toLowerCase().includes(q) || drugs.some((d) => d.toLowerCase().includes(q));
+  });
+
+  const compEntries = Object.entries(DRUG_COMPOSITION).filter(([name, comp]) => {
+    const q = compSearch.toLowerCase();
+    return name.toLowerCase().includes(q) || comp.toLowerCase().includes(q);
   });
 
   return (
@@ -109,64 +121,128 @@ export default function LearnDrugsSection({ go }: LearnDrugsSectionProps) {
         <h1 className="text-3xl font-bold">Препараты</h1>
       </div>
 
-      <p className="text-base font-semibold text-muted-foreground">3.2. Список препаратов</p>
-
-      {/* Поиск */}
-      <div className="relative">
-        <Icon name="Search" size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Поиск по симптому или препарату..."
-          className="w-full bg-secondary border border-border rounded-sm pl-8 sm:pl-9 pr-3 sm:pr-4 py-2 sm:py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-muted-foreground transition-colors"
-        />
-        {search && (
-          <button
-            onClick={() => setSearch("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-          >
-            <Icon name="X" size={14} />
-          </button>
-        )}
+      {/* Вкладки */}
+      <div className="flex gap-1 border-b border-border">
+        <button
+          onClick={() => setTab("symptoms")}
+          className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-colors border-b-2 -mb-px ${tab === "symptoms" ? "border-red-600 text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}
+        >
+          <Icon name="Pill" size={14} />
+          По симптомам
+        </button>
+        <button
+          onClick={() => setTab("composition")}
+          className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-colors border-b-2 -mb-px ${tab === "composition" ? "border-red-600 text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}
+        >
+          <Icon name="FlaskConical" size={14} />
+          Состав препаратов
+        </button>
       </div>
 
-      {/* Список */}
-      <div className="flex flex-col gap-4">
-        {filtered.length === 0 && (
-          <p className="text-sm text-muted-foreground">Ничего не найдено.</p>
-        )}
-        {filtered.map(({ symptom, hint, drugs }) => (
-          <div key={symptom} className="flex flex-col gap-1.5">
-            <div className="flex items-center gap-2">
-              <p className="text-base text-red-500 font-semibold">{symptom}:</p>
-              <button
-                onClick={() => toggleHint(symptom)}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                title="Как понять симптоматику"
-              >
-                <Icon name="Info" size={14} />
+      {tab === "symptoms" && (
+        <>
+          <p className="text-base font-semibold text-muted-foreground">3.2. Список препаратов</p>
+
+          {/* Поиск */}
+          <div className="relative">
+            <Icon name="Search" size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Поиск по симптому или препарату..."
+              className="w-full bg-secondary border border-border rounded-sm pl-8 sm:pl-9 pr-3 sm:pr-4 py-2 sm:py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-muted-foreground transition-colors"
+            />
+            {search && (
+              <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                <Icon name="X" size={14} />
               </button>
-            </div>
-            {openHints[symptom] && (
-              <div className="flex items-start gap-2 bg-secondary/50 border border-border rounded-sm px-2 sm:px-3 py-2.5 text-sm text-muted-foreground ml-1 sm:ml-2">
-                <Icon name="Lightbulb" size={14} className="text-yellow-400 shrink-0 mt-0.5" />
-                <span><span className="font-semibold text-foreground">Подсказка:</span> {hint}</span>
-              </div>
             )}
-            <div className="flex flex-wrap gap-1 sm:gap-1.5 ml-1 sm:ml-2">
-              {drugs.map((drug) => (
-                <span
-                  key={drug}
-                  className="text-xs sm:text-sm font-bold text-foreground bg-secondary border border-border rounded-sm px-2 sm:px-2.5 py-1"
-                >
-                  {drug}
-                </span>
-              ))}
-            </div>
           </div>
-        ))}
-      </div>
+
+          {/* Список */}
+          <div className="flex flex-col gap-4">
+            {filtered.length === 0 && <p className="text-sm text-muted-foreground">Ничего не найдено.</p>}
+            {filtered.map(({ symptom, hint, drugs }) => (
+              <div key={symptom} className="flex flex-col gap-1.5">
+                <div className="flex items-center gap-2">
+                  <p className="text-base text-red-500 font-semibold">{symptom}:</p>
+                  <button onClick={() => toggleHint(symptom)} className="text-muted-foreground hover:text-foreground transition-colors" title="Как понять симптоматику">
+                    <Icon name="Info" size={14} />
+                  </button>
+                </div>
+                {openHints[symptom] && (
+                  <div className="flex items-start gap-2 bg-secondary/50 border border-border rounded-sm px-2 sm:px-3 py-2.5 text-sm text-muted-foreground ml-1 sm:ml-2">
+                    <Icon name="Lightbulb" size={14} className="text-yellow-400 shrink-0 mt-0.5" />
+                    <span><span className="font-semibold text-foreground">Подсказка:</span> {hint}</span>
+                  </div>
+                )}
+                <div className="flex flex-wrap gap-1 sm:gap-1.5 ml-1 sm:ml-2">
+                  {drugs.map((drug) => (
+                    <button
+                      key={drug}
+                      onClick={() => { setTab("composition"); setCompSearch(drug); }}
+                      className="text-xs sm:text-sm font-bold text-foreground bg-secondary border border-border rounded-sm px-2 sm:px-2.5 py-1 hover:border-red-600/60 hover:text-red-400 transition-colors"
+                      title="Посмотреть состав"
+                    >
+                      {drug}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {tab === "composition" && (
+        <>
+          <p className="text-base font-semibold text-muted-foreground">Краткий фармацевтический состав</p>
+
+          {/* Поиск по составу */}
+          <div className="relative">
+            <Icon name="Search" size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="text"
+              value={compSearch}
+              onChange={(e) => setCompSearch(e.target.value)}
+              placeholder="Найти препарат или действующее вещество..."
+              className="w-full bg-secondary border border-border rounded-sm pl-8 sm:pl-9 pr-3 sm:pr-4 py-2 sm:py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-muted-foreground transition-colors"
+            />
+            {compSearch && (
+              <button onClick={() => setCompSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                <Icon name="X" size={14} />
+              </button>
+            )}
+          </div>
+
+          <p className="text-xs text-muted-foreground">Нажми на препарат во вкладке «По симптомам» — откроется здесь автоматически.</p>
+
+          {/* Список составов */}
+          <div className="flex flex-col gap-2">
+            {compEntries.length === 0 && <p className="text-sm text-muted-foreground">Ничего не найдено.</p>}
+            {compEntries.map(([name, comp]) => (
+              <div key={name} className="border border-border rounded-sm overflow-hidden">
+                <button
+                  onClick={() => toggleComp(name)}
+                  className="w-full flex items-center justify-between px-3 py-2.5 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <Icon name="FlaskConical" size={13} className="text-red-500 shrink-0" />
+                    <span className="text-sm font-semibold text-foreground">{name}</span>
+                  </div>
+                  <Icon name={openComp[name] ? "ChevronUp" : "ChevronDown"} size={14} className="text-muted-foreground shrink-0" />
+                </button>
+                {openComp[name] && (
+                  <div className="px-3 pb-3 pt-1 text-sm text-muted-foreground border-t border-border bg-secondary/30">
+                    {comp}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
       <p className="text-sm text-muted-foreground">
         Информационный раздел нашей больницы на госпортале по препаратам:{" "}
