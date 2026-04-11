@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Learn from "./pages/Learn";
 import Contacts from "./pages/Contacts";
 import NotFound from "./pages/NotFound";
+import NotFoundPage from "./pages/NotFoundPage";
 import SplashScreen from "./components/SplashScreen";
 import AdminLogin from "./pages/AdminLogin";
 import AdminPanel from "./pages/AdminPanel";
@@ -32,7 +33,7 @@ const App = () => {
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminPanel />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
