@@ -20,6 +20,7 @@ import LearnDrugsSection from "./learn/LearnDrugsSection";
 import LearnCharterSection from "./learn/LearnCharterSection";
 import LearnOathSection from "./learn/LearnOathSection";
 import LearnReportSection from "./learn/LearnReportSection";
+import LearnMisSection from "./learn/LearnMisSection";
 import LearnEvidenceSection from "./learn/LearnEvidenceSection";
 
 export default function Learn() {
@@ -136,7 +137,7 @@ export default function Learn() {
         <LearnSidebar active={active} go={go} />
 
         {/* ── Content ── */}
-        <main className={`flex-1 px-4 md:px-8 py-6 md:py-10 min-w-0 ${active === "intern-binds" || active === "intern-evidence" ? "max-w-4xl" : "max-w-2xl"}`}>
+        <main className={`flex-1 px-4 md:px-8 py-6 md:py-10 min-w-0 ${active === "intern-binds" || active === "intern-evidence" || active === "intern-mis" ? "max-w-4xl" : "max-w-2xl"}`}>
         <AnimatePresence mode="wait">
         <motion.div key={active} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
 
@@ -270,6 +271,9 @@ export default function Learn() {
 
           {/* ЧТО ДАЛЬШЕ? */}
           {active === "intern-report" && <LearnReportSection go={go} />}
+
+          {/* МИС ЗДОРОВЬЕ */}
+          {active === "intern-mis" && <LearnMisSection go={go} />}
 
           {/* ФИКСАЦИЯ ДОКАЗАТЕЛЬСТВ */}
           {active === "intern-evidence" && <LearnEvidenceSection go={go} />}
