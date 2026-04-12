@@ -11,11 +11,11 @@ export default function LearnEvidenceSection({ go }: LearnEvidenceSectionProps) 
     <div className="flex flex-col gap-6">
       <div>
         <button
-          onClick={() => go("intern-mis")}
+          onClick={() => go("intern-report")}
           className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           <Icon name="ChevronLeft" size={14} />
-          Назад к МИС «Здоровье»
+          Назад к «Что дальше?»
         </button>
         <p className="text-xs uppercase tracking-widest text-red-600 mb-1">Шаг 4: Отчет на повышение</p>
         <h1 className="text-3xl font-bold">Фиксация доказательств</h1>

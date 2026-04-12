@@ -16,7 +16,7 @@ export const NAV: { id: SectionId; label: string; icon: string; parent?: string;
   { id: "intern-drugs",        label: "Препараты",               icon: "Pill",          parent: "intern" },
   { id: "intern-oath",         label: "Клятва врача",            icon: "GraduationCap", parent: "intern" },
   { id: "intern-report",       label: "Что дальше?",             icon: "ClipboardCheck", parent: "intern", divider: "Шаг 4: Отчет на повышение" },
-  { id: "intern-mis",          label: "МИС «Здоровье»",          icon: "MonitorCheck",  parent: "intern" },
   { id: "intern-evidence",     label: "Фиксация доказательств",  icon: "Camera",        parent: "intern" },
+  { id: "intern-mis",          label: "МИС «Здоровье»",          icon: "MonitorCheck",  parent: "intern" },
   { id: "feldsher",            label: "Фельдшер",                icon: "Stethoscope" },
 ];

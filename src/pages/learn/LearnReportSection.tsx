@@ -72,10 +72,10 @@ export default function LearnReportSection({ go }: LearnReportSectionProps) {
 
       <div className="flex justify-end">
         <button
-          onClick={() => go("intern-mis")}
+          onClick={() => go("intern-evidence")}
           className="flex items-center gap-2 text-sm text-red-500 hover:text-red-400 transition-colors font-medium"
         >
-          Далее: МИС «Здоровье»
+          Далее: Фиксация доказательств
           <Icon name="ChevronRight" size={14} />
         </button>
       </div>

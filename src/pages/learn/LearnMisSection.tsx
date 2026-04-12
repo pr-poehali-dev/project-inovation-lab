@@ -30,17 +30,17 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
     <div className="flex flex-col gap-6">
       <div>
         <button
-          onClick={() => go("intern-report")}
+          onClick={() => go("intern-evidence")}
           className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           <Icon name="ChevronLeft" size={14} />
-          Назад к «Что дальше?»
+          Назад к фиксации доказательств
         </button>
         <p className="text-xs uppercase tracking-widest text-red-600 mb-1">Шаг 4: Отчет на повышение</p>
         <h1 className="text-3xl font-bold">МИС «Здоровье»</h1>
       </div>
 
-      <p className="text-base font-semibold text-muted-foreground">4.2. МИС «Здоровье»</p>
+      <p className="text-base font-semibold text-muted-foreground">4.3. МИС «Здоровье»</p>
 
       <p className="text-base text-foreground leading-relaxed">
         МИС «Здоровье» — это медицинская информационная система, куда ты загружаешь доказательства пролеченных пациентов перед подачей заявки на повышение. Без этого шага заявка не рассматривается.
@@ -103,18 +103,11 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
       {/* Навигация */}
       <div className="flex items-center justify-between pt-2">
         <button
-          onClick={() => go("intern-report")}
+          onClick={() => go("intern-evidence")}
           className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           <Icon name="ChevronLeft" size={14} />
-          Что дальше?
-        </button>
-        <button
-          onClick={() => go("intern-evidence")}
-          className="flex items-center gap-2 text-sm text-red-500 hover:text-red-400 transition-colors font-medium"
-        >
-          Далее: Фиксация доказательств
-          <Icon name="ChevronRight" size={14} />
+          Фиксация доказательств
         </button>
       </div>
     </div>
