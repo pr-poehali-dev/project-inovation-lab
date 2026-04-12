@@ -29,7 +29,7 @@ export default function LearnEvidenceSection({ go }: LearnEvidenceSectionProps) 
 
       {/* Пошаговая инструкция */}
       <div className="border border-border rounded-sm p-4 sm:p-6 flex flex-col gap-5">
-        <h2 className="text-lg font-bold text-red-500 text-center">Пошаговая инструкция по расширению чата</h2>
+        <h2 className="text-lg font-bold text-red-500 text-center">Пошаговая инструкция по фиксации доказательств</h2>
 
         {/* Шаг 1 */}
         <div className="flex flex-col gap-3">
@@ -149,6 +149,28 @@ export default function LearnEvidenceSection({ go }: LearnEvidenceSectionProps) 
               </div>
             </li>
           </ol>
+        </div>
+
+        {/* Шаг 3 */}
+        <div className="flex flex-col gap-3 pt-2 border-t border-border">
+          <p className="text-base font-semibold text-center text-foreground">Шаг 3. Как делать скриншот</p>
+          <p className="text-base text-foreground leading-relaxed">
+            Делать скриншот не сложно, если Вы не умеете. Есть много вариантов, как его сделать, например:
+          </p>
+          <ol className="flex flex-col gap-3">
+            <li className="flex items-start gap-2 text-sm text-foreground">
+              <span className="shrink-0 font-medium text-muted-foreground">1.</span>
+              <span>
+                Нажимаете на <span className="font-bold text-red-500">F12</span>. После того, как нажали, Ваш скриншот автоматически будет сделан в папке игры.
+              </span>
+            </li>
+          </ol>
+          <div className="flex items-start gap-3 bg-sky-500/10 border border-sky-500/40 rounded-sm px-4 py-3">
+            <span className="text-lg shrink-0 mt-0.5">💡</span>
+            <p className="text-sm text-sky-300 leading-relaxed">
+              <span className="font-bold">Совет:</span> если Вы не знаете, где находится папка игры, то открываете консоль на <span className="font-bold">F8</span> и в самом низу будет указан путь к данной папке. Далее, ищете эту папку.
+            </p>
+          </div>
         </div>
       </div>
 
