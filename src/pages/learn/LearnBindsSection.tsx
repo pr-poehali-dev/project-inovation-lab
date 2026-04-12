@@ -132,12 +132,12 @@ export default function LearnBindsSection({ go }: LearnBindsSectionProps) {
                   <span className="font-semibold text-foreground">скриншоте №2</span>;
                 </span>
               </div>
-              <img
-                src="https://skrinshoter.ru/sazbgIQPoBo"
+              <ImageLightbox
+                src="https://cdn.poehali.dev/projects/e2f7351e-e666-4647-88af-b4a6ed42363d/bucket/3afd4d68-d6c3-4af3-b294-577a7b259a3e.jpg"
                 alt="Скриншот №2: Консоль разработчика (F8)"
-                className="w-full rounded-sm border border-border ml-0 sm:ml-5 object-contain"
+                className="w-full rounded-sm border border-border ml-0 sm:ml-5"
+                caption="Скриншот №2: Консоль разработчика (F8)."
               />
-              <p className="text-xs text-muted-foreground text-center ml-0 sm:ml-5">Скриншот №2: Консоль разработчика (F8).</p>
             </li>
 
             <li className="flex flex-col gap-3 text-sm text-foreground">
