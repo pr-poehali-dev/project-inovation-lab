@@ -171,6 +171,30 @@ export default function LearnEvidenceSection({ go }: LearnEvidenceSectionProps) 
               <span className="font-bold">Совет:</span> если Вы не знаете, где находится папка игры, то открываете консоль на <span className="font-bold">F8</span> и в самом низу будет указан путь к данной папке. Далее, ищете эту папку.
             </p>
           </div>
+          <ol className="flex flex-col gap-3" start={2}>
+            <li className="flex items-start gap-2 text-sm text-foreground">
+              <span className="shrink-0 font-medium text-muted-foreground">2.</span>
+              <span>
+                Есть много программ для скриншота экрана, например, программа на ПК «Скриншотер». Очень простая программа, не требует каких-либо доп. скачиваний и быстро качается на компьютер;{" "}
+                <br className="mb-1" />
+                Ссылка для установки:{" "}
+                <a
+                  href="https://skrinshoter.ru/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-red-500 hover:text-red-400 underline transition-colors"
+                >
+                  Скриншотер — скриншоты и видео в один клик!
+                </a>
+              </span>
+            </li>
+            <li className="flex items-start gap-2 text-sm text-foreground">
+              <span className="shrink-0 font-medium text-muted-foreground">3.</span>
+              <span>
+                Если у Вас <span className="font-bold">NVIDIA GeForce Experience</span>, то Вы можете сделать скриншот через эту программу, если нажмете нужную комбинацию <span className="font-bold text-red-500">Alt</span> + <span className="font-bold text-red-500">Z</span>.
+              </span>
+            </li>
+          </ol>
         </div>
       </div>
 
