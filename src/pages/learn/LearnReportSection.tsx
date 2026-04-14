@@ -25,7 +25,7 @@ export default function LearnReportSection({ go }: LearnReportSectionProps) {
         <h1 className="text-3xl font-bold">{data.title}</h1>
       </div>
 
-      <p className="text-base font-semibold text-muted-foreground">4.1. Что дальше?</p>
+      <p className="text-base font-semibold text-muted-foreground">4.1. Подготовка к повышению</p>
 
       <div className="text-base text-foreground leading-relaxed rich-content">
         <RichContent html={data.content} />
