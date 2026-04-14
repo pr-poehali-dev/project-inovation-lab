@@ -92,17 +92,9 @@ export default function Learn() {
                 <h1 className="text-3xl font-bold">Вступление</h1>
               </div>
               <p className="text-2xl font-bold text-foreground">{introData.welcome}</p>
-              <div className="text-base text-foreground leading-relaxed"><RichContent html={introData.line1} /></div>
-              <div className="text-base text-foreground leading-relaxed">
-                <RichContent html={introData.line2} />{" "}
-                <span className="text-red-600 font-semibold">{introData.days_total} дней</span>.
+              <div className="text-base text-foreground leading-relaxed rich-content">
+                <RichContent html={introData.content} />
               </div>
-              <p className="text-base text-foreground leading-relaxed">
-                {introData.line3} <span className="text-red-600 font-bold">{introData.days_feldsher} дней</span> — {introData.line4}
-              </p>
-              <p className="text-base text-foreground leading-relaxed">
-                {introData.line5} <span className="text-red-600 font-bold">{introData.days_feldsher} дней</span> — {introData.line6}
-              </p>
             </div>
           )}
 
@@ -113,66 +105,22 @@ export default function Learn() {
                 <p className="text-xs uppercase tracking-widest text-red-600 mb-1">Раздел</p>
                 <h1 className="text-3xl font-bold">Интерн</h1>
               </div>
-
               <p className="text-xl font-bold text-red-400">{internExam.title}</p>
-              <div className="text-base text-foreground leading-relaxed"><RichContent html={internExam.desc} /></div>
-
-              <p className="text-base text-foreground font-medium">Чтобы получить допуск, вам нужно сдать:</p>
-
-              <ol className="flex flex-col gap-5">
-                <li className="flex items-start gap-3">
-                  <span className="text-muted-foreground text-base w-5 shrink-0 pt-0.5">1</span>
-                  <span className="text-base text-foreground">Прослушать вступительную лекцию;</span>
-                </li>
-
-                <li className="flex flex-col gap-2">
-                  <div className="flex items-start gap-3">
-                    <span className="text-muted-foreground text-base w-5 shrink-0 pt-0.5">2</span>
-                    <span className="text-base text-foreground">Сдать устную речь;</span>
-                  </div>
-                  <div className="ml-8 border-l-2 border-red-600/40 pl-4 flex flex-col gap-1">
-                    <p className="text-sm text-muted-foreground italic">
-                      Устная речь — это бинды. Слово «Бинд» в РП мы не используем!
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      В устной речи мы проверяем, как Вы установили бинды и в случае чего, помогаем исправлять вместе с Вами.
-                    </p>
-                    <a href={internExam.binds_link} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm text-red-500 hover:text-red-400 transition-colors font-medium mt-1">
-                      <Icon name="ExternalLink" size={13} />
-                      Бинды для сотрудников
-                    </a>
-                  </div>
-                </li>
-
-                <li className="flex flex-col gap-2">
-                  <div className="flex items-start gap-3">
-                    <span className="text-muted-foreground text-base w-5 shrink-0 pt-0.5">3</span>
-                    <span className="text-base text-foreground">Сдать Первичный Медицинский Экзамен;</span>
-                  </div>
-                  <div className="ml-8 border-l-2 border-red-600/40 pl-4 flex flex-col gap-2">
-                    <p className="text-sm text-foreground font-medium">Первичный Медицинский Экзамен (ПМЭ) включает в себя:</p>
-                    <ul className="flex flex-col gap-1.5">
-                      {internExam.exam_items.map((t, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full border border-muted-foreground shrink-0" />
-                          {t}
-                        </li>
-                      ))}
-                    </ul>
-                    <a href={internExam.charter_link} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm text-red-500 hover:text-red-400 transition-colors font-medium mt-1">
-                      <Icon name="ExternalLink" size={13} />
-                      Внутренний Устав ЦГБ-Н
-                    </a>
-                  </div>
-                </li>
-
-                <li className="flex items-start gap-3">
-                  <span className="text-muted-foreground text-base w-5 shrink-0 pt-0.5">4</span>
-                  <span className="text-base text-foreground">Сдать клятву врача.</span>
-                </li>
-              </ol>
+              <div className="text-base text-foreground leading-relaxed rich-content">
+                <RichContent html={internExam.content} />
+              </div>
+              <div className="flex flex-col gap-2 mt-2">
+                <a href={internExam.binds_link} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm text-red-500 hover:text-red-400 transition-colors font-medium">
+                  <Icon name="ExternalLink" size={13} />
+                  Бинды для сотрудников
+                </a>
+                <a href={internExam.charter_link} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm text-red-500 hover:text-red-400 transition-colors font-medium">
+                  <Icon name="ExternalLink" size={13} />
+                  Внутренний Устав ЦГБ-Н
+                </a>
+              </div>
             </div>
           )}
 

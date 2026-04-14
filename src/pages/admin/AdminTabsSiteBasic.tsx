@@ -1,7 +1,7 @@
 import { playClickSound } from "@/hooks/useSound";
 import Icon from "@/components/ui/icon";
 import { SaveBtn, Field, Inp, SectionHeader } from "./adminHelpers";
-import { BADGE_COLORS, HeroData, StaffMember } from "./adminTypes";
+import { BADGE_COLORS, HeroData, StaffMember, IntroData, InternExam } from "./adminTypes";
 import RichEditor from "@/components/ui/rich-editor";
 
 interface Props {
@@ -18,11 +18,11 @@ interface Props {
   editStaffIdx: number | null;
   setEditStaffIdx: React.Dispatch<React.SetStateAction<number | null>>;
 
-  introData: { welcome: string; line1: string; line2: string; days_total: string; line3: string; days_feldsher: string; line4: string; line5: string; line6: string };
-  setIntroData: React.Dispatch<React.SetStateAction<{ welcome: string; line1: string; line2: string; days_total: string; line3: string; days_feldsher: string; line4: string; line5: string; line6: string }>>;
+  introData: IntroData;
+  setIntroData: React.Dispatch<React.SetStateAction<IntroData>>;
 
-  internExam: { title: string; desc: string; binds_link: string; charter_link: string; exam_items: string[] };
-  setInternExam: React.Dispatch<React.SetStateAction<{ title: string; desc: string; binds_link: string; charter_link: string; exam_items: string[] }>>;
+  internExam: InternExam;
+  setInternExam: React.Dispatch<React.SetStateAction<InternExam>>;
 }
 
 export default function AdminTabsSiteBasic({
@@ -160,46 +160,18 @@ export default function AdminTabsSiteBasic({
 
       {/* ── INTRO ──────────────────────────────────────────────────────── */}
       {tab === "intro" && (
-        <div className="max-w-2xl">
+        <div className="max-w-3xl">
           <SectionHeader title="Вступление" desc="Текст страницы приветствия в разделе обучения" />
           <div className="flex flex-col gap-4">
-            <Field label="Заголовок (крупный текст)">
-              <Inp value={introData.welcome} onChange={v => setIntroData(d => ({ ...d, welcome: v }))} />
+            <Field label="Заголовок раздела">
+              <Inp value={introData.welcome} onChange={v => setIntroData(d => ({ ...d, welcome: v }))} placeholder="Добро пожаловать в ЦГБ города Невский!" />
             </Field>
-            <Field label="Строка 1 — Вы являетесь сотрудником...">
-              <RichEditor value={introData.line1} onChange={v => setIntroData(d => ({ ...d, line1: v }))} placeholder="Первый абзац вступления..." minHeight={70} />
+            <Field label="Содержимое раздела">
+              <div className="mb-2 text-xs text-zinc-500 leading-relaxed">
+                Используй панель инструментов для форматирования. Для выделения чисел красным цветом — выдели текст и используй цвет текста.
+              </div>
+              <RichEditor value={introData.content} onChange={v => setIntroData(d => ({ ...d, content: v }))} placeholder="Текст вступления..." minHeight={200} />
             </Field>
-            <Field label="Строка 2 — На выход из ОИ вам дается...">
-              <RichEditor value={introData.line2} onChange={v => setIntroData(d => ({ ...d, line2: v }))} placeholder="Второй абзац вступления..." minHeight={70} />
-            </Field>
-            <div className="grid grid-cols-2 gap-4">
-              <Field label="Число дней (всего в ОИ)">
-                <Inp value={introData.days_total} onChange={v => setIntroData(d => ({ ...d, days_total: v }))} placeholder="14" />
-              </Field>
-              <Field label="Число дней (до Фельдшера)">
-                <Inp value={introData.days_feldsher} onChange={v => setIntroData(d => ({ ...d, days_feldsher: v }))} placeholder="7" />
-              </Field>
-            </div>
-            <Field label="Строка 3 — За N дней (текст перед числом)">
-              <Inp value={introData.line3} onChange={v => setIntroData(d => ({ ...d, line3: v }))} />
-            </Field>
-            <Field label="Строка 4 — ...дней — повыситься до Фельдшера.">
-              <Inp value={introData.line4} onChange={v => setIntroData(d => ({ ...d, line4: v }))} />
-            </Field>
-            <Field label="Строка 5 — После повышения ещё (текст перед числом)">
-              <Inp value={introData.line5} onChange={v => setIntroData(d => ({ ...d, line5: v }))} />
-            </Field>
-            <Field label="Строка 6 — ...дней — выйти из ОИ.">
-              <Inp value={introData.line6} onChange={v => setIntroData(d => ({ ...d, line6: v }))} />
-            </Field>
-            <div className="bg-zinc-900/50 border border-zinc-800 px-4 py-3 rounded-sm text-xs text-zinc-500">
-              <span className="text-zinc-400 font-semibold">Предпросмотр:</span><br />
-              <span className="text-white">{introData.welcome}</span><br />
-              <span>{introData.line1}</span><br />
-              <span>{introData.line2} <span className="text-red-400 font-bold">{introData.days_total} дней</span>.</span><br />
-              <span>{introData.line3} <span className="text-red-400 font-bold">{introData.days_feldsher} дней</span> — {introData.line4}</span><br />
-              <span>{introData.line5} <span className="text-red-400 font-bold">{introData.days_feldsher} дней</span> — {introData.line6}</span>
-            </div>
             <SaveBtn onClick={() => saveBlock("intro_data", introData)} saved={saved} loading={saving} />
           </div>
         </div>
@@ -207,41 +179,27 @@ export default function AdminTabsSiteBasic({
 
       {/* ── INTERN EXAM ────────────────────────────────────────────────── */}
       {tab === "intern_exam" && (
-        <div className="max-w-2xl">
+        <div className="max-w-3xl">
           <SectionHeader title="Раздел Интерн" desc="Задача и требования для получения допуска к лечению" />
-          <div className="flex flex-col gap-4 mb-6">
-            <Field label="Главная задача (красный заголовок)">
-              <Inp value={internExam.title} onChange={v => setInternExam(d => ({ ...d, title: v }))} />
+          <div className="flex flex-col gap-4">
+            <Field label="Заголовок задачи (красный текст на сайте)">
+              <Inp value={internExam.title} onChange={v => setInternExam(d => ({ ...d, title: v }))} placeholder="Твоя первая и главная задача..." />
             </Field>
-            <Field label="Описание">
-              <RichEditor value={internExam.desc} onChange={v => setInternExam(d => ({ ...d, desc: v }))} placeholder="Описание раздела Интерн..." minHeight={90} />
+            <Field label="Содержимое раздела">
+              <div className="mb-2 text-xs text-zinc-500 leading-relaxed">
+                Пиши весь текст раздела: описание, нумерованные списки, условия. Для красного цвета — выдели текст и выбери цвет.
+              </div>
+              <RichEditor value={internExam.content} onChange={v => setInternExam(d => ({ ...d, content: v }))} placeholder="Описание и условия получения допуска..." minHeight={250} />
             </Field>
-            <Field label="Ссылка на бинды">
-              <Inp value={internExam.binds_link} onChange={v => setInternExam(d => ({ ...d, binds_link: v }))} />
-            </Field>
-            <Field label="Ссылка на Внутренний Устав">
-              <Inp value={internExam.charter_link} onChange={v => setInternExam(d => ({ ...d, charter_link: v }))} />
-            </Field>
-          </div>
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-sm font-semibold text-zinc-300">Пункты ПМЭ</p>
-              <button onClick={() => { playClickSound(); setInternExam(d => ({ ...d, exam_items: [...d.exam_items, "Новый пункт"] })); }}
-                className="flex items-center gap-1 text-zinc-500 hover:text-white text-xs transition-colors">
-                <Icon name="Plus" size={12} />Добавить
-              </button>
+            <div className="grid grid-cols-2 gap-4">
+              <Field label="Ссылка на бинды">
+                <Inp value={internExam.binds_link} onChange={v => setInternExam(d => ({ ...d, binds_link: v }))} placeholder="https://forum.gtaprovince.ru/..." />
+              </Field>
+              <Field label="Ссылка на Внутренний Устав">
+                <Inp value={internExam.charter_link} onChange={v => setInternExam(d => ({ ...d, charter_link: v }))} placeholder="https://forum.gtaprovince.ru/..." />
+              </Field>
             </div>
-            <div className="flex flex-col gap-2 border border-zinc-800 p-4">
-              {internExam.exam_items.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2 group">
-                  <input value={item} onChange={e => setInternExam(d => ({ ...d, exam_items: d.exam_items.map((x, i) => i === idx ? e.target.value : x) }))}
-                    className="flex-1 bg-zinc-900 border border-zinc-700 text-white px-3 py-2 text-sm outline-none focus:border-red-600 transition-colors" />
-                  <button onClick={() => { playClickSound(); setInternExam(d => ({ ...d, exam_items: d.exam_items.filter((_, i) => i !== idx) })); }}
-                    className="text-zinc-600 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 shrink-0"><Icon name="X" size={14} /></button>
-                </div>
-              ))}
-            </div>
-            <div className="mt-3"><SaveBtn onClick={() => saveBlock("intern_exam", internExam)} saved={saved} loading={saving} /></div>
+            <SaveBtn onClick={() => saveBlock("intern_exam", internExam)} saved={saved} loading={saving} />
           </div>
         </div>
       )}

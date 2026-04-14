@@ -23,6 +23,21 @@ export type ActivityLink = { label: string; href: string };
 export const BADGE_COLORS = ["bg-red-600", "bg-blue-600", "bg-green-600", "bg-yellow-600", "bg-purple-600", "bg-zinc-600"];
 export const DEPT_COLORS = ["text-green-400", "text-sky-400", "text-red-400", "text-pink-400", "text-orange-400", "text-yellow-400", "text-purple-400"];
 
+export type IntroData = { welcome: string; content: string };
+export type InternExam = { title: string; content: string; binds_link: string; charter_link: string };
+
+export const defaultIntroData: IntroData = {
+  welcome: "Добро пожаловать в ЦГБ города Невский!",
+  content: `<p>С этого момента Вы являетесь сотрудником Отделения Интернатуры.</p><p>На выход из Отделения Интернатуры и повышения до лаборанта вам дается <strong><span style="color:#dc2626">14 дней</span></strong>.</p><p>За <strong><span style="color:#dc2626">7 дней</span></strong> — повыситься до Фельдшера.</p><p>После повышения ещё <strong><span style="color:#dc2626">7 дней</span></strong> — выйти из ОИ.</p>`,
+};
+
+export const defaultInternExam: InternExam = {
+  title: "Твоя первая и главная задача: Получить допуск к лечению.",
+  content: `<p>До получения допуска к лечению вам нельзя абсолютно ничего. Лечить пациентов сможете только тогда, когда получите допуск к лечению.</p><p><strong>Чтобы получить допуск, вам нужно сдать:</strong></p><ol><li>Прослушать вступительную лекцию;</li><li><strong>Сдать устную речь</strong> — это бинды. Слово «Бинд» в РП мы не используем!</li><li><strong>Сдать Первичный Медицинский Экзамен (ПМЭ)</strong>, который включает: информацию о больнице, практический экзамен по выдаче препаратов, вопросы по Внутреннему уставу.</li><li>Сдать клятву врача.</li></ol>`,
+  binds_link: "https://forum.gtaprovince.ru/topic/995732-cgb-g-nevskiy-bindy-dlya-sotrudnikov/",
+  charter_link: "https://forum.gtaprovince.ru/topic/995741-cgb-g-nevskiy-vnutrenniy-ustav/",
+};
+
 export const defaultHero: HeroData = { subtitle: "Методическое пособие для сотрудников отделения. Всё, что нужно знать с первого дня службы.", buttonText: "Перейти к обучению" };
 export const defaultSections: Section[] = [
   { id: "intern", title: "Интерн", items: ["Ознакомление с правилами внутреннего распорядка", "Изучение структуры отделения", "Работа с медицинской документацией"] },

@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import {
   Role, Tab, AccessUser,
   Section, StaffMember, Command, Floor, Department, CharterDoc, Report,
-  HeroData, AbbrItem, RadioCommand, RadioRule,
+  HeroData, AbbrItem, RadioCommand, RadioRule, IntroData, InternExam,
   defaultHero, defaultSections, defaultStaff, defaultCommands, defaultFloors,
   defaultDepartments, defaultCharter, defaultOathLines, defaultMaleReports,
   defaultFemaleReports, defaultSchedule, defaultAbbr, defaultRadioCommands,
@@ -66,8 +66,8 @@ export default function AdminPanel() {
   const [radioCommands, setRadioCommands] = useState<RadioCommand[]>(defaultRadioCommands);
   const [radioRules, setRadioRules] = useState<RadioRule[]>(defaultRadioRules);
   const [activityData, setActivityData] = useState(defaultActivityData);
-  const [introData, setIntroData] = useState(defaultIntroData);
-  const [internExam, setInternExam] = useState(defaultInternExam);
+  const [introData, setIntroData] = useState<IntroData>(defaultIntroData);
+  const [internExam, setInternExam] = useState<InternExam>(defaultInternExam);
 
   // Access state
   const [accessUsers, setAccessUsers] = useState<AccessUser[]>([]);
