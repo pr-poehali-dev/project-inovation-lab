@@ -75,7 +75,7 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
         </p>
         <p className="text-sm text-foreground leading-relaxed">
           <span className="text-red-400">▻ Лечение — 5 пациентов:</span>{" "}
-          <strong>указываем ссылку на облачное хранение</strong>
+          <strong>указываем ссылку на облачное хранение</strong>.
         </p>
       </div>
 
@@ -89,9 +89,9 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
             <li>Доказательства должны быть расположены по порядку;</li>
             <li>
               Используй нейтральные хостинги по типу{" "}
-              <span className="text-red-400 font-semibold">Яндекс Диск</span>{" "}
+              <a href="https://disk.yandex.ru" target="_blank" rel="noopener noreferrer" className="text-red-400 font-semibold hover:text-red-300 underline underline-offset-2 transition-colors">Яндекс Диск</a>{" "}
               и{" "}
-              <span className="text-red-400 font-semibold">Google Диск</span>,{" "}
+              <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" className="text-red-400 font-semibold hover:text-red-300 underline underline-offset-2 transition-colors">Google Диск</a>,{" "}
               чтобы проверяющий смог с легкостью проверить твой отчет.
             </li>
           </ol>
@@ -102,6 +102,14 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
       <div className="border border-zinc-600/50 rounded-sm px-4 py-3 bg-zinc-800/30 text-sm text-foreground leading-relaxed">
         Как будет все заполнено, можешь смело нажимать{" "}
         <span className="text-green-400 font-semibold">Отправить</span>.
+      </div>
+
+      {/* Голубая рамка — совет */}
+      <div className="flex items-start gap-3 bg-sky-500/10 border border-sky-500/40 rounded-sm px-4 py-3.5">
+        <span className="text-sky-400 text-base shrink-0 mt-0.5">💡</span>
+        <p className="text-sm text-sky-200 leading-relaxed">
+          Чтобы улучшить проверку твоего отчета и получить одобрение, сортируй все свои доказательства по папкам. Например: лечения в одну папку с лечениями, строи в папку со строями. Исключения будут вызовы, но мы поговорим об этом позже. Пока что учись и повышайся ❤️
+        </p>
       </div>
 
       <div className="flex items-center justify-between pt-2">
