@@ -121,10 +121,12 @@ export default function LearnGovSection({ go }: LearnGovSectionProps) {
             </div>
           </div>
 
-          <div className="w-full max-w-3xl rounded-sm border border-border bg-secondary/20 flex items-center justify-center py-12 text-sm text-muted-foreground">
-            Скриншот №3
-          </div>
-          <p className="text-xs text-muted-foreground text-center">Скриншот №3: Премии за дополнительную работу.</p>
+          <ImageLightbox
+            src="https://cdn.poehali.dev/projects/e2f7351e-e666-4647-88af-b4a6ed42363d/bucket/a236dcfc-13b8-43c9-9819-a4dcd43368f2.png"
+            alt="Скриншот №3"
+            className="w-full max-w-3xl rounded-sm border border-border"
+            caption="Скриншот №3: Премии за дополнительную работу."
+          />
         </div>
       </div>
 
