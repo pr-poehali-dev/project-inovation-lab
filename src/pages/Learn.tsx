@@ -77,52 +77,6 @@ export default function Learn() {
         <div className="w-px h-4 bg-border hidden sm:block" />
         <p className="text-xs uppercase tracking-widest text-red-600 truncate">Отделение интернатуры</p>
         <div className="ml-auto flex items-center gap-2">
-          {/* Поиск */}
-          <div className="relative">
-            {searchOpen ? (
-              <div className="flex items-center gap-2 bg-muted border border-border rounded px-3 py-1.5">
-                <Icon name="Search" size={14} className="text-muted-foreground shrink-0" />
-                <input
-                  ref={searchRef}
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  placeholder="Найти раздел..."
-                  className="bg-transparent text-sm outline-none w-36 md:w-48 text-foreground placeholder:text-muted-foreground"
-                />
-                <button onClick={() => { setSearch(""); setSearchOpen(false); }}>
-                  <Icon name="X" size={14} className="text-muted-foreground hover:text-foreground" />
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => setSearchOpen(true)}
-                className="text-muted-foreground hover:text-foreground transition-colors p-1"
-                aria-label="Поиск"
-              >
-                <Icon name="Search" size={18} />
-              </button>
-            )}
-            {/* Результаты */}
-            {searchResults.length > 0 && (
-              <div className="absolute right-0 top-full mt-1 bg-popover border border-border rounded shadow-lg z-50 w-56 py-1 max-h-64 overflow-y-auto">
-                {searchResults.map(r => (
-                  <button
-                    key={r.id}
-                    onClick={() => go(r.id)}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted transition-colors text-left"
-                  >
-                    <Icon name={r.icon as "Home"} size={14} className="text-red-500 shrink-0" />
-                    <span>{r.label}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-            {search.trim() && searchResults.length === 0 && searchOpen && (
-              <div className="absolute right-0 top-full mt-1 bg-popover border border-border rounded shadow-lg z-50 w-56 py-3 text-center text-sm text-muted-foreground">
-                Ничего не найдено
-              </div>
-            )}
-          </div>
           <button
             onClick={() => { playClickSound(); toggleTheme(); }}
             className="text-muted-foreground hover:text-foreground transition-colors p-1"
@@ -138,6 +92,45 @@ export default function Learn() {
 
         {/* ── Content ── */}
         <main className={`flex-1 px-4 md:px-8 py-6 md:py-10 min-w-0 ${active === "intern-binds" || active === "intern-evidence" || active === "intern-mis" ? "max-w-4xl" : "max-w-2xl"}`}>
+
+          {/* Поисковик */}
+          <div className="relative mb-8">
+            <div className="flex items-center gap-3 bg-muted border border-border rounded-lg px-4 py-3 focus-within:border-red-500 transition-colors">
+              <Icon name="Search" size={18} className="text-muted-foreground shrink-0" />
+              <input
+                ref={searchRef}
+                value={search}
+                onChange={e => { setSearch(e.target.value); setSearchOpen(true); }}
+                onFocus={() => setSearchOpen(true)}
+                placeholder="Поиск по разделам обучения..."
+                className="bg-transparent text-sm outline-none flex-1 text-foreground placeholder:text-muted-foreground"
+              />
+              {search && (
+                <button onClick={() => { setSearch(""); setSearchOpen(false); }}>
+                  <Icon name="X" size={16} className="text-muted-foreground hover:text-foreground" />
+                </button>
+              )}
+            </div>
+            {searchResults.length > 0 && searchOpen && (
+              <div className="absolute left-0 right-0 top-full mt-1 bg-popover border border-border rounded-lg shadow-lg z-50 py-1 max-h-64 overflow-y-auto">
+                {searchResults.map(r => (
+                  <button
+                    key={r.id}
+                    onClick={() => go(r.id)}
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-muted transition-colors text-left"
+                  >
+                    <Icon name={r.icon as "Home"} size={15} className="text-red-500 shrink-0" />
+                    <span>{r.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+            {search.trim() && searchResults.length === 0 && searchOpen && (
+              <div className="absolute left-0 right-0 top-full mt-1 bg-popover border border-border rounded-lg shadow-lg z-50 py-4 text-center text-sm text-muted-foreground">
+                Ничего не найдено
+              </div>
+            )}
+          </div>
         <AnimatePresence mode="wait">
         <motion.div key={active} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
 
