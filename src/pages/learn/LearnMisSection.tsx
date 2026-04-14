@@ -45,7 +45,7 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
         <Icon name="ExternalLink" size={15} className="text-muted-foreground group-hover:text-red-400 transition-colors shrink-0" />
       </a>
 
-      {/* Остальное содержимое из редактора */}
+      {/* Первая часть контента (пункты 1–3) */}
       <div className="text-base text-foreground leading-relaxed rich-content">
         <RichContent html={data.content} />
       </div>
@@ -55,6 +55,13 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
         Если первая страница была заполнена — нажимаем{" "}
         <span className="text-green-400 font-semibold">Далее</span>.
       </div>
+
+      {/* Вторая часть контента (пункт 4 и далее) */}
+      {data.content2 && (
+        <div className="text-base text-foreground leading-relaxed rich-content">
+          <RichContent html={data.content2} />
+        </div>
+      )}
 
       {/* Красная рамка — пример заполнения критериев */}
       <div className="border border-red-600/60 rounded-sm px-4 py-4 flex flex-col gap-2 bg-red-950/10">
