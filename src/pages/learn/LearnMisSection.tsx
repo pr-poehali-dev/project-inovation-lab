@@ -27,8 +27,33 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
 
       <p className="text-base font-semibold text-muted-foreground">4.3. МИС «Здоровье»</p>
 
+      {/* Первый абзац — вводный текст (только первый параграф из content) */}
+      <p className="text-base text-foreground leading-relaxed">
+        МИС «Здоровье» — это медицинская информационная система, куда ты загружаешь доказательства своей работы в больнице перед подачей заявки на повышение. Без этого шага заявка не рассматривается.
+      </p>
+
+      {/* Кнопка открыть МИС — перемещена сюда */}
+      <a href={MIS_URL} target="_blank" rel="noopener noreferrer"
+        className="flex items-center justify-between gap-3 border border-red-600/40 bg-red-600/5 hover:bg-red-600/10 rounded-sm px-4 py-3.5 transition-colors group">
+        <div className="flex items-center gap-3">
+          <Icon name="MonitorCheck" size={20} className="text-red-500 shrink-0" />
+          <div>
+            <p className="text-sm font-semibold text-foreground">Открыть МИС «Здоровье»</p>
+            <p className="text-xs text-muted-foreground mt-0.5">Google Forms — форма для загрузки доказательств</p>
+          </div>
+        </div>
+        <Icon name="ExternalLink" size={15} className="text-muted-foreground group-hover:text-red-400 transition-colors shrink-0" />
+      </a>
+
+      {/* Остальное содержимое из редактора */}
       <div className="text-base text-foreground leading-relaxed rich-content">
         <RichContent html={data.content} />
+      </div>
+
+      {/* Серая рамка — нажать Далее */}
+      <div className="border border-zinc-600/50 rounded-sm px-4 py-3 bg-zinc-800/30 text-sm text-foreground leading-relaxed">
+        Если первая страница была заполнена — нажимаем{" "}
+        <span className="text-green-400 font-semibold">Далее</span>.
       </div>
 
       {/* Красная рамка — пример заполнения критериев */}
@@ -42,7 +67,8 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
           <strong>#номер приказа</strong>;
         </p>
         <p className="text-sm text-foreground leading-relaxed">
-          ▻ Лечение — 5 пациентов: <strong>указываем ссылку на облачное хранение</strong>
+          <span className="text-red-400">▻ Лечение — 5 пациентов:</span>{" "}
+          <strong>указываем ссылку на облачное хранение</strong>
         </p>
       </div>
 
@@ -70,19 +96,6 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
         Как будет все заполнено, можешь смело нажимать{" "}
         <span className="text-green-400 font-semibold">Отправить</span>.
       </div>
-
-      {/* Кнопка открыть МИС */}
-      <a href={MIS_URL} target="_blank" rel="noopener noreferrer"
-        className="flex items-center justify-between gap-3 border border-red-600/40 bg-red-600/5 hover:bg-red-600/10 rounded-sm px-4 py-3.5 transition-colors group">
-        <div className="flex items-center gap-3">
-          <Icon name="MonitorCheck" size={20} className="text-red-500 shrink-0" />
-          <div>
-            <p className="text-sm font-semibold text-foreground">Открыть МИС «Здоровье»</p>
-            <p className="text-xs text-muted-foreground mt-0.5">Google Forms — форма для загрузки доказательств</p>
-          </div>
-        </div>
-        <Icon name="ExternalLink" size={15} className="text-muted-foreground group-hover:text-red-400 transition-colors shrink-0" />
-      </a>
 
       <div className="flex items-center justify-between pt-2">
         <button onClick={() => go("intern-evidence")}
