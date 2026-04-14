@@ -128,10 +128,10 @@ export default function LearnGovSection({ go }: LearnGovSectionProps) {
             caption="Скриншот №3: Премии за дополнительную работу."
           />
 
-          <div className="flex items-start gap-3 bg-orange-500/10 border border-orange-500/40 rounded-sm px-4 py-3.5">
-            <Icon name="TriangleAlert" size={16} className="text-orange-400 shrink-0 mt-0.5" />
-            <p className="text-sm text-orange-200 leading-relaxed">
-              <span className="font-bold text-orange-300">ВАЖНО:</span> Для интерна доступно премирование только за дополнительные лечения и строи в силу своей должности.
+          <div className="flex items-start gap-3 bg-red-500/10 border border-red-500/40 rounded-sm px-4 py-3.5">
+            <Icon name="TriangleAlert" size={16} className="text-red-400 shrink-0 mt-0.5" />
+            <p className="text-sm text-red-200 leading-relaxed">
+              <span className="font-bold text-red-300">ВНИМАНИЕ:</span> Для интерна доступно премирование только за дополнительные лечения и строи в силу своей должности!
             </p>
           </div>
         </div>
