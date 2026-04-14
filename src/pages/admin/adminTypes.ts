@@ -173,7 +173,7 @@ export const defaultActivityData = {
 export type SimplePageData = { title: string; content: string; content2?: string };
 
 export const defaultReportPage: SimplePageData = {
-  title: "Что дальше?",
+  title: "Подготовка к повышению",
   content: `<p>После успешной сдачи всех экзаменов и получения допуска к лечению, твой последний шаг на должности Интерна:</p><ol><li>Вылечить <strong><span style="color:#ef4444">5 пациентов</span></strong>.</li><li>Загрузить доказательства в МИС «Здоровье».</li><li>Оставить заявление на госпортал, о том, что Вы загрузили свои доказательства в МИС «Здоровье».</li></ol>`,
 };
 

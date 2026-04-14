@@ -20,7 +20,7 @@ export default function LearnEvidenceSection({ go }: LearnEvidenceSectionProps) 
           className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           <Icon name="ChevronLeft" size={14} />
-          Назад к «Что дальше?»
+          Назад к «Подготовка к повышению»
         </button>
         <p className="text-xs uppercase tracking-widest text-red-600 mb-1">Шаг 4: Отчет на повышение</p>
         <h1 className="text-3xl font-bold">{data.title}</h1>

@@ -25,7 +25,7 @@ const ALL_TABS: { id: Tab; label: string; icon: string; superOnly?: boolean }[] 
   { id: "intro",          label: "Вступление",   icon: "Flag",          superOnly: true },
   { id: "intern_exam",    label: "Интерн",       icon: "GraduationCap", superOnly: true },
   { id: "binds_page",     label: "Бинды",        icon: "Keyboard",      superOnly: true },
-  { id: "report_page",    label: "Что дальше?",  icon: "ArrowRight",    superOnly: true },
+  { id: "report_page",    label: "Подг. к пов.", icon: "ArrowRight",    superOnly: true },
   { id: "evidence_page",  label: "Доказат.",     icon: "Camera",        superOnly: true },
   { id: "mis_page",       label: "МИС",          icon: "MonitorCheck",  superOnly: true },
   { id: "feldsher_page",  label: "Фельдшер",     icon: "Stethoscope",   superOnly: true },
