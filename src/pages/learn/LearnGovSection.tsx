@@ -68,11 +68,11 @@ export default function LearnGovSection({ go }: LearnGovSectionProps) {
       </p>
 
       {/* Пошаговая инструкция */}
-      <div className="border border-border rounded-sm p-4 sm:p-6 flex flex-col gap-6">
+      <div className="border border-border rounded-sm p-6 sm:p-8 flex flex-col gap-8">
         <h2 className="text-lg font-bold text-red-500 text-center">Пошаговая инструкция для подачи отчета на повышение</h2>
 
         {/* Шаг 1 */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           <p className="text-base font-semibold text-center text-foreground">Шаг 1. Знакомство с Информационным разделом ОИ</p>
           <p className="text-base text-foreground leading-relaxed">
             Переходя по ссылке, на первой странице ты сталкиваешься с общей информацией о нашем отделении, как на скриншоте №1;
@@ -80,13 +80,13 @@ export default function LearnGovSection({ go }: LearnGovSectionProps) {
           <ImageLightbox
             src="https://cdn.poehali.dev/projects/e2f7351e-e666-4647-88af-b4a6ed42363d/bucket/cfba417c-3c11-481b-81bf-45ac5d3a08b2.png"
             alt="Скриншот №1"
-            className="w-full max-w-3xl rounded-sm border border-border"
+            className="w-full rounded-sm border border-border"
             caption="Скриншот №1: Основная информация о нашем отделении."
           />
         </div>
 
         {/* Шаг 2 */}
-        <div className="flex flex-col gap-3 pt-2 border-t border-border">
+        <div className="flex flex-col gap-4 pt-4 border-t border-border">
           <p className="text-base font-semibold text-center text-foreground">Шаг 2. Критерии для повышения</p>
           <p className="text-base text-foreground leading-relaxed">
             Как и писалось ранее в другом разделе, есть определенные критерии для подачи отчета. Здесь уже представлены в полном объеме критерии на должности{" "}
@@ -98,13 +98,13 @@ export default function LearnGovSection({ go }: LearnGovSectionProps) {
           <ImageLightbox
             src="https://cdn.poehali.dev/projects/e2f7351e-e666-4647-88af-b4a6ed42363d/bucket/2283c700-7904-49a4-8eeb-0145f62c3dfe.png"
             alt="Скриншот №2"
-            className="w-full max-w-3xl rounded-sm border border-border"
+            className="w-full rounded-sm border border-border"
             caption="Скриншот №2: Критерии для повышения."
           />
         </div>
 
         {/* Шаг 3 */}
-        <div className="flex flex-col gap-3 pt-2 border-t border-border">
+        <div className="flex flex-col gap-4 pt-4 border-t border-border">
           <p className="text-base font-semibold text-center text-foreground">Шаг 3. Премии за перевыполнение нормы</p>
           <p className="text-base text-foreground leading-relaxed">
             В нашей больнице существует система поощрения, если основные критерии будут выполнены и к ним добавится дополнительно выполненная работа. На скриншоте №3 представлена сумма премии и сама работа.
@@ -124,7 +124,7 @@ export default function LearnGovSection({ go }: LearnGovSectionProps) {
           <ImageLightbox
             src="https://cdn.poehali.dev/projects/e2f7351e-e666-4647-88af-b4a6ed42363d/bucket/a236dcfc-13b8-43c9-9819-a4dcd43368f2.png"
             alt="Скриншот №3"
-            className="w-full max-w-3xl rounded-sm border border-border"
+            className="w-full rounded-sm border border-border"
             caption="Скриншот №3: Премии за дополнительную работу."
           />
         </div>
