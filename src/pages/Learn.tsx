@@ -23,6 +23,7 @@ import LearnOathSection from "./learn/LearnOathSection";
 import LearnReportSection from "./learn/LearnReportSection";
 import LearnMisSection from "./learn/LearnMisSection";
 import LearnEvidenceSection from "./learn/LearnEvidenceSection";
+import LearnGovSection from "./learn/LearnGovSection";
 
 export default function Learn() {
   const [active, setActive] = useState<SectionId>("intro");
@@ -169,6 +170,9 @@ export default function Learn() {
 
           {/* ФИКСАЦИЯ ДОКАЗАТЕЛЬСТВ */}
           {active === "intern-evidence" && <LearnEvidenceSection go={go} />}
+
+          {/* ГОСПОРТАЛ */}
+          {active === "intern-gov" && <LearnGovSection go={go} />}
 
           {/* ФЕЛЬДШЕР */}
           {active === "feldsher" && (

@@ -1,4 +1,4 @@
-export type SectionId = "intro" | "intern" | "intern-binds" | "intern-radio" | "intern-reports" | "intern-commands" | "intern-abbr" | "intern-schedule" | "intern-floors" | "intern-activity" | "intern-charter" | "intern-departments" | "intern-drugs" | "intern-oath" | "intern-report" | "intern-mis" | "intern-evidence" | "feldsher";
+export type SectionId = "intro" | "intern" | "intern-binds" | "intern-radio" | "intern-reports" | "intern-commands" | "intern-abbr" | "intern-schedule" | "intern-floors" | "intern-activity" | "intern-charter" | "intern-departments" | "intern-drugs" | "intern-oath" | "intern-report" | "intern-mis" | "intern-evidence" | "intern-gov" | "feldsher";
 
 export const NAV: { id: SectionId; label: string; icon: string; parent?: string; divider?: string }[] = [
   { id: "intro",           label: "Вступление",         icon: "Flag" },
@@ -18,5 +18,6 @@ export const NAV: { id: SectionId; label: string; icon: string; parent?: string;
   { id: "intern-report",       label: "Подготовка к повышению",  icon: "ClipboardCheck", parent: "intern", divider: "Шаг 4: Отчет на повышение" },
   { id: "intern-evidence",     label: "Фиксация доказательств",  icon: "Camera",        parent: "intern" },
   { id: "intern-mis",          label: "МИС «Здоровье»",          icon: "MonitorCheck",  parent: "intern" },
+  { id: "intern-gov",          label: "Госпортал",               icon: "Globe",         parent: "intern" },
   { id: "feldsher",            label: "Фельдшер",                icon: "Stethoscope" },
 ];
