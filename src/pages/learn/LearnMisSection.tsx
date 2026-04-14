@@ -31,6 +31,47 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
         <RichContent html={data.content} />
       </div>
 
+      {/* Красная рамка — пример заполнения критериев */}
+      <div className="border border-red-600/60 rounded-sm px-4 py-4 flex flex-col gap-2 bg-red-950/10">
+        <p className="text-sm text-foreground leading-relaxed">
+          <span className="text-red-400">▻ Прослушать вступительную лекцию:</span>{" "}
+          <strong>#номер приказа</strong>;
+        </p>
+        <p className="text-sm text-foreground leading-relaxed">
+          <span className="text-red-400">▻ Первичный Медицинский Экзамен (ПМЭ):</span>{" "}
+          <strong>#номер приказа</strong>;
+        </p>
+        <p className="text-sm text-foreground leading-relaxed">
+          ▻ Лечение — 5 пациентов: <strong>указываем ссылку на облачное хранение</strong>
+        </p>
+      </div>
+
+      {/* Оранжевое предупреждение */}
+      <div className="flex items-start gap-3 bg-orange-500/10 border border-orange-500/40 rounded-sm px-4 py-3.5">
+        <Icon name="TriangleAlert" size={16} className="text-orange-400 shrink-0 mt-0.5" />
+        <div className="flex flex-col gap-1.5">
+          <p className="text-sm font-bold text-orange-300">ВАЖНО:</p>
+          <ol className="flex flex-col gap-1.5 text-sm text-orange-200 leading-relaxed list-decimal list-inside">
+            <li>Для повышения у тебя должны отсутствовать любые дисциплинарные взыскания (Исключение: Сотрудникам отделения интернатуры разрешено повышаться при наличии предупреждений);</li>
+            <li>Доказательства должны быть расположены по порядку;</li>
+            <li>
+              Используй нейтральные хостинги по типу{" "}
+              <span className="text-red-400 font-semibold">Яндекс Диск</span>{" "}
+              и{" "}
+              <span className="text-red-400 font-semibold">Google Диск</span>,{" "}
+              чтобы проверяющий смог с легкостью проверить твой отчет.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      {/* Серая рамка — финальный шаг */}
+      <div className="border border-zinc-600/50 rounded-sm px-4 py-3 bg-zinc-800/30 text-sm text-foreground leading-relaxed">
+        Как будет все заполнено, можешь смело нажимать{" "}
+        <span className="text-green-400 font-semibold">Отправить</span>.
+      </div>
+
+      {/* Кнопка открыть МИС */}
       <a href={MIS_URL} target="_blank" rel="noopener noreferrer"
         className="flex items-center justify-between gap-3 border border-red-600/40 bg-red-600/5 hover:bg-red-600/10 rounded-sm px-4 py-3.5 transition-colors group">
         <div className="flex items-center gap-3">
@@ -42,13 +83,6 @@ export default function LearnMisSection({ go }: LearnMisSectionProps) {
         </div>
         <Icon name="ExternalLink" size={15} className="text-muted-foreground group-hover:text-red-400 transition-colors shrink-0" />
       </a>
-
-      <div className="flex items-start gap-3 bg-orange-500/10 border border-orange-500/40 rounded-sm px-4 py-3">
-        <Icon name="TriangleAlert" size={16} className="text-orange-400 shrink-0 mt-0.5" />
-        <p className="text-sm text-orange-300 leading-relaxed">
-          <span className="font-bold">ВАЖНО:</span> Форму можно заполнить только один раз за отчётный период. Убедись, что все 5 скриншотов готовы, прежде чем отправлять.
-        </p>
-      </div>
 
       <div className="flex items-center justify-between pt-2">
         <button onClick={() => go("intern-evidence")}
